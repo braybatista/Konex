@@ -26,8 +26,6 @@ export class VentasComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    $('.modal').modal({dismissible: false});
-    $('.tooltipped').tooltip({delay: 20});
   }
 
   consultarVentas(){

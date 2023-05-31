@@ -22,9 +22,11 @@ export class MedicamentoPipe implements PipeTransform {
     }); 
   }
 
-  formatDate(date: string): string{
-    let yourDate = new Date(date);
-    return yourDate.toISOString().split('T')[0];
+  formatDate(date: string){
+    const now = new Date(date);
+    const offsetMs = now.getTimezoneOffset() * 60 * 1000;
+    const dateLocal = new Date(now.getTime() - offsetMs);
+    return dateLocal.toISOString().split('T')[0].replace(/-/g, "/")
   }
 
   cleanFields(field: string){

@@ -9,6 +9,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { MedicamentoPipe } from '../filter/medicamento.filter.component';
 import { HomeComponent } from './components/home/home.component';
 import { DateFormatPipe } from '../filter/date-format.pipe';
+import { DateTimeFormatPipe } from '../filter/datetime-format.pipe';
 
 
 @NgModule({
@@ -18,6 +19,7 @@ import { DateFormatPipe } from '../filter/date-format.pipe';
     IndexComponent,
     MedicamentoPipe,
     DateFormatPipe,
+    DateTimeFormatPipe,
     HomeComponent
   ],
   imports: [
@@ -26,7 +28,7 @@ import { DateFormatPipe } from '../filter/date-format.pipe';
     FormsModule, 
     ReactiveFormsModule
   ],
-  providers: [DateFormatPipe],
+  providers: [DateFormatPipe, DateTimeFormatPipe],
   schemas: [NO_ERRORS_SCHEMA]
 })
 export class KonexAppModule { }

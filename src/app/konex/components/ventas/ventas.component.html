@@ -12,7 +12,7 @@
             </div>
         </div>
         <div class="row">
-            <button class="btn modal-trigger waves-effect waves-light tooltipped blue darken-4" data-position="left" data-delay="25" data-tooltip="Consultar" data-target="modal1" type="button" name="action" (click)="consultarVentas()">
+            <button class="btn modal-trigger waves-effect waves-light tooltipped blue darken-4" type="button" name="action" (click)="consultarVentas()">
                 Consultar
             </button>
         </div>
@@ -32,8 +32,7 @@
             </thead>
             <tbody>
               <tr *ngFor="let venta of ventas">  
-                <!-- | transaccionfilter:filterargs -->
-                <td>{{venta.fechaTransaccion | dateFormat}}</td>
+                <td>{{venta.fechaTransaccion | dateTimeFormat}}</td>
                 <td>{{venta.medicamento.nombre}}</td>
                 <td>{{venta.cantidad}}</td>
                 <td>{{venta.valorUnitario | currency}}</td>
