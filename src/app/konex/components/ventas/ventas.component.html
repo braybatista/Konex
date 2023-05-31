@@ -1,17 +1,20 @@
 <br>
 <div class="container">
     <div class="row">
-        <div class="input-field col s2">
-            <button class="btn modal-trigger waves-effect waves-light tooltipped blue darken-4" data-position="left" data-delay="25" data-tooltip="Agregar" data-target="modal1" type="button" name="action" (click)="limpiarTransaccion()">
-                <i class="large material-icons">add</i>
-            </button>
+        <div class="row">
+            <div class="input-field col s6">
+                <input type="date" class="validate" id="fechaInicio" [(ngModel)]="fechaInicio" autocomplete="off" required>
+                <label class="active" for="fechaInicio">Fecha Inicio</label>
+            </div>
+            <div class="input-field col s6">
+                <input type="date" class="validate" id="fechaFin" [(ngModel)]="fechaFin" autocomplete="off" required>
+                <label class="active" for="fechaFin">Fecha Fin</label>
+            </div>
         </div>
-        <div class="input-field col s3 offset-s7">
-            <input type="text" 
-            id="search" 
-            [(ngModel)]="filterargs.trIdentificador" 
-            /> 
-            <label class="active" for="search">search</label>
+        <div class="row">
+            <button class="btn modal-trigger waves-effect waves-light tooltipped blue darken-4" data-position="left" data-delay="25" data-tooltip="Consultar" data-target="modal1" type="button" name="action" (click)="consultarVentas()">
+                Consultar
+            </button>
         </div>
     </div>
 
@@ -20,32 +23,25 @@
         <table class="striped">
             <thead>
                 <tr class="styled-thead">
-                    <td><b>Num Referencia</b></td>
-                    <td><b>Identificador</b></td>
-                    <td><b>Total Compra</b></td>
-                    <td><b>Direccion Compra</b></td>
-                    <td><b>Fecha Compra</b></td>
-                    <td><b>Estado</b></td>
-                    <td colspan="2"></td>
+                    <td><b>Fecha</b></td>
+                    <td><b>medicamento</b></td>
+                    <td><b>Cantidad</b></td>
+                    <td><b>Valor Unitario</b></td>
+                    <td><b>Valor Total</b></td>
                 </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let transaccion of transaccions | slice: numRowsIni : numRowsEnd | transaccionfilter:filterargs">  
+              <tr *ngFor="let venta of ventas">  
                 <!-- | transaccionfilter:filterargs -->
-                <td>{{transaccion.trNumReferencia}}</td>
-                <td>{{transaccion.trIdentificador}}</td>
-                <td>{{transaccion.trTotalCompra}}</td>
-                <td>{{transaccion.trDireccionCompra}}</td>
-                <td>{{transaccion.trFecha}}</td>
-                <td>{{transaccion.trEstado}}</td>
-                <td>
-                    <!-- <a href="javascript:void(0)" class="table-btn edit-btn modal-trigger waves-effect waves-green btn blue darken-4" data-target="modal1" (click)="cargarTransaccion(transaccion);">%</a> -->
-                    <!-- <a href="javascript:void(0)" class="table-btn delete-btn waves-effect waves-red btn red darken-4" (click)="eliminarTransaccion(transaccion);">Anular</a> -->
-                </td>
+                <td>{{venta.fechaTransaccion | dateFormat}}</td>
+                <td>{{venta.medicamento.nombre}}</td>
+                <td>{{venta.cantidad}}</td>
+                <td>{{venta.valorUnitario | currency}}</td>
+                <td>{{venta.valorTotal | currency}}</td>
               </tr>
             </tbody>
         </table>
-        <!-- <div class="row">
+        <div class="row">
             <div class="col s2">
                 <label for="status">Rows</label>
                 <select class="browser-default" id="rows" [(ngModel)]="numberRows" (change)="changeRowsSelect()" autocomplete="off">
@@ -64,45 +60,6 @@
                     >{{page}}</option>
                 </select>
             </div>
-        </div> -->
+        </div>
     </div>
 </div>
-
-<!-- Modal Structure -->
-<div id="modal1" class="modal">
-    <div class="row">
-        <div class="input-field col s6">
-            <h4>Crear Transaccion</h4>
-        </div>
-    </div>
-    <form [formGroup]="modalCreateForm" novalidate>
-    <div class="modal-content">
-        <div class="row">
-            <div class="input-field col s6">
-                <input type="text" id="trNumReferencia" formControlName="trNumReferencia" [(ngModel)]="selectedTransaccion.trNumReferencia" class="validate" pattern="[0-9]{6}" minlength="6" maxlength="6" autocomplete="off" required>
-                <label class="active" for="trNumReferencia">Num Referencia</label>
-            </div>
-            <div class="input-field col s6">
-                <input type="text" id="trIdentificador" formControlName="trIdentificador" [(ngModel)]="selectedTransaccion.trIdentificador" class="validate" pattern="[0-9]{16,75}" minlength="16" maxlength="30" autocomplete="off" required>
-                <label class="active" for="trIdentificador">Identificador</label>
-            </div>
-        </div>
-        <div class="row">
-            <div class="input-field col s6">
-                <input type="text" id="trTotalCompra" formControlName="trTotalCompra" [(ngModel)]="selectedTransaccion.trTotalCompra" class="validate" pattern="[0-9]{1,10}" minlength="1" maxlength="10" autocomplete="off" required>
-                <label class="active" for="trTotalCompra">Total Compra</label>
-            </div>
-            <div class="input-field col s6">
-                <input type="text" id="trDireccionCompra" formControlName="trDireccionCompra" [(ngModel)]="selectedTransaccion.trDireccionCompra" class="validate" pattern="[A-Za-z0-9]{16,75}" minlength="16" maxlength="75" autocomplete="off" required>
-                <label class="active" for="trDireccionCompra">Direccion Compra</label>
-            </div>
-        </div>
-        
-    </div>
-    <div class="modal-footer">
-        <a href="javascript:void(0)" class="close-btn modal-close waves-effect waves-red btn red darken-4 white-text" (click)="limpiarTransaccion()">Cerrar</a>
-        <button type="button" class="modal-close waves-effect waves-green btn blue darken-4" (click)="mergeTransaccion(selectedTransaccion)" [disabled]="modalCreateForm.status === 'INVALID'">Guardar</button>
-    </div>
-</form>
-</div>
-

@@ -137,10 +137,10 @@ export class MedicamentosComponent implements OnInit {
     venta.medicamento = medicamento;
     venta.medicamento.fechaVencimiento = new Date(venta.medicamento.fechaVencimiento);
     venta.medicamento.fechaFabricacion = new Date(venta.medicamento.fechaFabricacion);
-    venta.fecha = new Date();
+    venta.fechaTransaccion = new Date();
     venta.valorUnitario = venta.medicamento.valorUnitario;
     venta.valorTotal = venta.cantidad * (venta.valorUnitario ? venta.valorUnitario : 0);
-    
+
     console.log(venta);
 
     this.ventaService.realizarVenta(venta).subscribe({

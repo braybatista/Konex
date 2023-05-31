@@ -7,7 +7,6 @@ import { MedicamentosComponent } from './components/medicamentos/medicamentos.co
 import { VentasComponent } from './components/ventas/ventas.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { MedicamentoPipe } from '../filter/medicamento.filter.component';
-import { TransaccionPipe } from '../filter/transaccion.filter.component';
 import { HomeComponent } from './components/home/home.component';
 import { DateFormatPipe } from '../filter/date-format.pipe';
 
@@ -18,7 +17,6 @@ import { DateFormatPipe } from '../filter/date-format.pipe';
     VentasComponent,
     IndexComponent,
     MedicamentoPipe,
-    TransaccionPipe,
     DateFormatPipe,
     HomeComponent
   ],

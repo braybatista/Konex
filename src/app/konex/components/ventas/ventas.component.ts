@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Transaccion } from '../../models/transaccion';
-import { TransaccionService } from '../../services/transaccion.service';
+import { Venta } from '../../models/venta';
+import { VentaService } from '../../services/venta.service';
 
 declare var $: any;
 @Component({
@@ -11,32 +11,18 @@ declare var $: any;
 })
 export class VentasComponent implements OnInit {
 
-  public selectedTransaccion: Transaccion = new Transaccion();
-  public filterargs = {
-    trNumReferencia : 0,
-    trDireccionCompra : '',
-    trTotalCompra : 0,
-    trEstado : '',
-    trFecha : '',
-    trIdentificador : ''
-  }
+  public fechaInicio: string = '';
+  public fechaFin: string = ''
+
   public numberRows: number = 10;
   public numberPage: number = 1;
   public numRowsIni: number = 0;
   public numRowsEnd: number = this.numberRows;
   public pages:Array<number> = [];
-  public transaccions: Transaccion[] = [];
+  public ventas: Venta[] = [];
 
-  public modalCreateForm: FormGroup;
+  constructor(private ventaService: VentaService) {
 
-  constructor(private transaccionService: TransaccionService) {
-    this.consultarTransacciones();
-    this.modalCreateForm = new FormGroup({
-      trNumReferencia: new FormControl(['', [Validators.required, Validators.pattern(/^-?(0|[1-9]\d*)?$/), Validators.minLength(6), Validators.maxLength(6) ]]),
-      trIdentificador: new FormControl(['', [Validators.required, Validators.pattern(/^-?(0|[1-9]\d*)?$/), Validators.minLength(16), Validators.maxLength(30) ]]),
-      trTotalCompra: new FormControl(['', [Validators.required, Validators.minLength(1), Validators.maxLength(10) ]]),
-      trDireccionCompra: new FormControl(['', [Validators.required, Validators.minLength(1), Validators.maxLength(75) ]]),
-    });
   }
 
   ngOnInit(): void {
@@ -44,11 +30,11 @@ export class VentasComponent implements OnInit {
     $('.tooltipped').tooltip({delay: 20});
   }
 
-  consultarTransacciones(){
-    this.transaccionService.consultarTransacciones().subscribe({
+  consultarVentas(){
+    this.ventaService.consultarVentas(this.fechaInicio, this.fechaFin).subscribe({
       next: (response: any)=>{
         console.log(response)
-        this.transaccions = response.data;
+        this.ventas = response.bodyResponse;
         this.calculatePagesNumber();
       },
       complete: ()=>{
@@ -59,64 +45,10 @@ export class VentasComponent implements OnInit {
       }
     });
   }
-  
-  mergeTransaccion(transaccion: Transaccion){
-    if(confirm('Está seguro que quiere agregar la transaccion?')){
-      this.transaccionService.crearTransaccion(this.selectedTransaccion).subscribe({
-        next: (response: any)=>{
-          console.log(response)
-          if(response.codigoRespuesta !== "00"){
-            alert("ha ocurrido un errror al tratar de crear el usuario")
-          } else{
-            alert("Creación Exitosa!!!")
-          }
-        },
-        complete: () => {
-          this.consultarTransacciones();
-          this.limpiarTransaccion();
-        },
-        error: (error)=>{
-          console.log(error)
-          alert("Error: " + error.error.codigoRespuesta + " - " + error.error.mensaje);
-          this.limpiarTransaccion();
-        }
-      });
-    }
-  }
-
-  /* Delete Medicamento */
-  eliminarTransaccion(transaccion: Transaccion){
-    if(confirm('Está seguro que quiere Eliminar la transaccion?')){
-      this.transaccionService.anularTransaccion(transaccion).subscribe({
-        next: (response: any)=>{
-          console.log(response)
-          if(response.codigoRespuesta !== "00"){
-            alert("ha ocurrido un errror al tratar de crear el usuario")
-          } else{
-            alert("Anulación Exitosa!!!")
-          }
-        },
-        complete: ()=>{
-          this.consultarTransacciones();
-          this.limpiarTransaccion();
-        },
-        error: (error)=>{
-          console.log(error)
-          alert("Error: " + error.error.codigoRespuesta + " - " + error.error.mensaje);
-          this.limpiarTransaccion();
-        }
-      });
-    }
-  }
-  
-  /* Load initial Transaccion */
-  cargarTransaccion(Transaccion: Transaccion){
-    this.selectedTransaccion = Transaccion;
-  }
 
   calculatePagesNumber(){
     this.pages = [];
-    var dataLength = this.transaccions.length;
+    var dataLength = this.ventas.length;
     var numberRows = this.numberRows;
     var pageNum = Math.ceil(dataLength/numberRows)
 
@@ -145,10 +77,6 @@ export class VentasComponent implements OnInit {
     const offsetMs = now.getTimezoneOffset() * 60 * 1000;
     const dateLocal = new Date(now.getTime() - offsetMs);
     return dateLocal.toISOString().slice(0, 19).replace(/-/g, "/").replace("T", " ");
-  }
-
-  limpiarTransaccion(){
-    this.selectedTransaccion = new Transaccion();
   }
 
 }
