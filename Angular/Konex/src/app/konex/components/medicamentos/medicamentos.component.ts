@@ -164,6 +164,7 @@ export class MedicamentosComponent implements OnInit {
 
   limpiarMedicamento(){
     this.selectedMedicamento = new Medicamento();
+    this.venta = new Venta();
   }
   
   cargarMedicamento(medicamento: Medicamento){

@@ -51,6 +51,7 @@ public class VentaEntity {
 	public VentaEntity(VentaDto venta){
 		this.id = venta.getId();
 		this.fechaTransaccion = new Date();
+		this.horaTransaccion = new Date();
 		this.medicamento = new MedicamentoEntity(venta.getMedicamento());
 		this.cantidad = venta.getCantidad();
 		this.valorUnitario = venta.getValorUnitario();
