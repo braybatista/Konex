@@ -131,6 +131,10 @@
                     <input type="text" id="cantidad" formControlName="cantidad" [(ngModel)]="venta.cantidad" class="validate" pattern="[0-9]{0,10}" minlength="0" maxlength="10" autocomplete="off" required>
                     <label class="active" for="cantidad">Cantidad en Stock</label>
                 </div>
+                <div class="input-field col s6">
+                    <label type="text" id="valorTotal">{{(selectedMedicamento.valorUnitario ? selectedMedicamento.valorUnitario : 0) * venta.cantidad | currency}}</label>
+                    <label class="active" for="valorTotal">ValorTotal</label>
+                </div>
             </div>
         </div>
         <div class="modal-footer">

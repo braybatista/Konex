@@ -51,9 +51,7 @@ export class MedicamentosComponent implements OnInit {
     });
 
     this.modalEnroleForm = new FormGroup({
-      meId: new FormControl([ '', [Validators.required, Validators.pattern(/^-?(0|[1-9]\d*)?$/), Validators.minLength(0), Validators.maxLength(10) ] ]),
       cantidad: new FormControl([ '', [Validators.required, Validators.pattern(/^-?(0|[1-9]\d*)?$/), Validators.minLength(0), Validators.maxLength(10) ] ]),
-      valorTotal: new FormControl([ '',[Validators.required, Validators.pattern(/^-?[0-9]{1,10}(\.\d{0,2})?$/), Validators.minLength(3), Validators.maxLength(12) ] ])
     });
 
     this.consultarMedicamentos();
