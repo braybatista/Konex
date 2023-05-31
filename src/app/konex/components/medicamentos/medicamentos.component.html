@@ -1,0 +1,144 @@
+<br>
+<div class="container">
+    <div class="row">
+        <div class="input-field col s2">
+            <button class="btn modal-trigger waves-effect waves-light tooltipped blue darken-4" data-position="left" data-delay="25" data-tooltip="Agregar" data-target="modal1" type="button" name="action" (click)="limpiarTarjeta();">
+                <i class="large material-icons">add</i>
+            </button>
+        </div>
+        <div class="input-field col s3 offset-s7">
+            <input type="text" 
+            id="search" 
+            [(ngModel)]="filterargs.taTitular" 
+            /> 
+            <label class="active" for="search">search</label>
+        </div>
+    </div>
+
+    <div class="row">
+        <h4>Lista de Medicamentos</h4>
+        <table class="striped">
+            <thead>
+              <tr class="styled-thead">
+                <td><b>PAN</b></td>
+                <td><b>TITULAR</b></td>
+                <td><b>CEDULA</b></td>
+                <td><b>TELEFONO</b></td>
+                <td><b>TIPO</b></td>
+                <td><b>ESTADO</b></td>
+                <td><b>IDENTIFICADOR</b></td>
+                <!-- <td><b>NUM VALIDACION</b></td> -->
+                <td colspan="2"></td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let tarjeta of tarjetas | slice: numRowsIni : numRowsEnd | tarjetafilter:filterargs">
+                <!-- | tarjetafilter:filterargs -->
+                <td>{{tarjeta.taPan}}</td>
+                <td>{{tarjeta.taTitular}}</td>
+                <td>{{tarjeta.taCedula}}</td>
+                <td>{{tarjeta.taTelefono}}</td>
+                <td>{{tarjeta.taTipo}}</td>
+                <td>{{tarjeta.taEstado}}</td>
+                <td>{{tarjeta.taIdentificador}}</td>
+                <!-- <td>{{tarjeta.taNumValidacion}}</td> -->
+                <td>
+                    <!-- <a href="javascript:void(0)" class="table-btn modal-trigger edit-btn waves-effect waves-green btn blue darken-4" data-target="modal-enrolamiento" (click)="limpiarTarjeta();cargarTarjeta(tarjeta)">Enrolar</a> -->
+                    <!-- <a href="javascript:void(0)" class="table-btn edit-btn modal-trigger waves-effect waves-green btn tooltipped blue lighten-3" data-position="top" data-delay="25" data-tooltip="Editar" data-target="modal1" (click)="cargarTarjeta(tarjeta);"><i class="large material-icons">border_color</i></a> -->
+                    <!-- <a href="javascript:void(0)" class="table-btn delete-btn waves-effect waves-red btn red darken-4" (click)="eliminarTarjeta(tarjeta);"><i class="large material-icons">block</i></a> -->
+                </td>
+              </tr>
+            </tbody>
+        </table>
+        <!-- <div class="row">
+            <div class="col s2">
+                <label for="status">Rows</label>
+                <select class="browser-default" id="rows" [(ngModel)]="numberRows" (change)="changeRowsSelect()" autocomplete="off">
+                    <option value=10>10</option>
+                    <option value=20>20</option>
+                    <option value=50>50</option>
+                    <option value=100>50</option>
+                </select>
+            </div>
+            <div class="col s1 offset-s9">
+                <label for="status">Page</label>
+                <select class="browser-default" id="page" [(ngModel)]="numberPage" (change)="changePageSelect()" autocomplete="off">
+                    <option 
+                    *ngFor="let page of pages"
+                    value={{page}}
+                    >{{page}}</option>
+                </select>
+            </div>
+        </div> -->
+    </div>
+</div>
+
+<!-- Modal Structure -->
+<div id="modal1" class="modal">
+    <div class="row">
+        <div class="input-field col s6">
+            <h4>Crear Tarjeta</h4>
+        </div>
+    </div>
+    <form [formGroup]="modalCreateForm" novalidate>
+        <div class="modal-content">
+            <div class="row">
+                <div class="input-field col s6">
+                    <input type="text" id="taTitular" name="taTitular"  formControlName="taTitular" [(ngModel)]="selectedTarjeta.taTitular" class="validate" pattern="[A-Za-z]{5,75}" maxlength="75" autocomplete="off" required>
+                    <label class="active" for="taTitular">Titular</label>
+                </div>
+                <div class="input-field col s6">
+                    <input type="text" id="taTelefono" formControlName="taTelefono" [(ngModel)]="selectedTarjeta.taTelefono" class="validate" pattern="[0-9]{10}" minlength="10" maxlength="10" autocomplete="off" required>
+                    <label class="active" for="taTelefono">Telefono</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s6">
+                    <input type="text" id="taCedula" formControlName="taCedula" [(ngModel)]="selectedTarjeta.taCedula" class="validate" pattern="[0-9]{10,15}" minlength="10" maxlength="15" autocomplete="off" required>
+                    <label class="active" for="taCedula">Cedula</label>
+                </div>
+                <div class="col s6">
+                    <label for="status">Tipo</label>
+                    <select class="browser-default" id="status" formControlName="taTipo" [(ngModel)]="selectedTarjeta.taTipo" minlength="1" autocomplete="off" required>
+                        <option value="" disabled selected>Choose your option</option>
+                        <option value="CREDITO">CREDITO</option>
+                        <option value="DEBITO">DEBITO</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s6">
+                    <input type="text" id="taPan" formControlName="taPan" [(ngModel)]="selectedTarjeta.taPan" class="validate" pattern="[0-9]{16,19}" minlength="16" maxlength="19" autocomplete="off" required>
+                    <label class="active" for="taPan">Numero Tarjeta</label>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a href="javascript:void(0)" class="close-btn modal-close waves-effect waves-red btn red darken-4 white-text" (click)="limpiarTarjeta()">Cerrar</a>
+            <button type="button" class="modal-close waves-effect waves-green btn blue darken-4" (click)="mergeTarjeta(selectedTarjeta)" [disabled]="modalCreateForm.status === 'INVALID'">Guardar</button>
+        </div>
+    </form>
+</div>
+
+<!-- Modal Structure -->
+<div id="modal-enrolamiento" class="modal">
+    <div class="row">
+        <div class="input-field col s6">
+            <h4>Enrolar Tarjeta</h4>
+        </div>
+    </div>
+    <form [formGroup]="modalEnroleForm" novalidate>
+        <div class="modal-content">
+            <div class="row">
+                <div class="input-field col s6">
+                    <input type="text" id="taNumValidacion" formControlName="taNumValidacion" [(ngModel)]="selectedTarjeta.taNumValidacion" class="validate" pattern="[0-9]{1,3}" minlength="1" maxlength="3" autocomplete="off" required>
+                    <label class="active" for="taNumValidacion">Numero Validacion</label>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a href="javascript:void(0)" class="close-btn modal-close waves-effect waves-red btn red darken-4 white-text" (click)="limpiarTarjeta()">Cerrar</a>
+            <button type="button" class="modal-close waves-effect waves-green btn blue darken-4" (click)="enrolarTarjeta(selectedTarjeta)" [disabled]="modalEnroleForm.status === 'INVALID'">Guardar</button>
+        </div>
+    </form>
+</div>
