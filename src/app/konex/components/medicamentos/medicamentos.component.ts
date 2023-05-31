@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Tarjeta } from '../../models/tarjeta';
-import { TarjetaService } from '../../services/tarjeta.service';
+import { Medicamento } from '../../models/medicamento';
+import { MedicamentoService } from '../../services/medicamento.service';
+import { DateFormatPipe } from 'src/app/filter/date-format.pipe';
+import { Venta } from '../../models/venta';
+import { VentaService } from '../../services/venta.service';
 
 declare var $: any;
 
@@ -12,55 +15,61 @@ declare var $: any;
 })
 export class MedicamentosComponent implements OnInit {
 
-  public selectedTarjeta: Tarjeta = new Tarjeta();
+  public selectedMedicamento: Medicamento = new Medicamento();
+  public venta: Venta = new Venta();
   public filterargs = {
-    taNumValidacion : 0,
-    taTipo : '',
-    taCedula : 0,
-    taIdentificador : '',
-    taTelefono : 0,
-    taTitular : '',
-    taEstado : '',
-    taPan : ''
+    nombre: '',
+    laboratorio: '',
+    fechaFabricacion: '',
+    fechaVencimiento: '',
+    stock: null,
+    valorUnitario: null
   }
   public numberRows: number = 10;
   public numberPage: number = 1;
   public numRowsIni: number = 0;
   public numRowsEnd: number = this.numberRows;
   public pages:Array<number> = [];
-  public tarjetas: Tarjeta[] = [];
+  public medicamentos: Medicamento[] = [];
 
   public modalCreateForm: FormGroup;
   public modalEnroleForm: FormGroup;
 
   constructor(
-    private tarjetaService: TarjetaService
+    private medicamentoService: MedicamentoService,
+    private ventaService: VentaService,
+    private formatDatePipe: DateFormatPipe
   ) {
     this.modalCreateForm = new FormGroup({
-      taTitular: new FormControl(['', [Validators.required, Validators.minLength(5), Validators.maxLength(75) ]]),
-      taTipo: new FormControl(['', [Validators.required, Validators.minLength(1), Validators.maxLength(10) ]]),
-      taCedula: new FormControl(['', [Validators.required, Validators.pattern(/^-?(0|[1-9]\d*)?$/), Validators.minLength(10), Validators.maxLength(15) ]]),
-      taTelefono: new FormControl(['', [Validators.required, Validators.pattern(/^-?(0|[1-9]\d*)?$/), Validators.minLength(10), Validators.maxLength(10) ]]),
-      taPan: new FormControl(['',[Validators.required, Validators.pattern(/^-?(0|[1-9]\d*)?$/), Validators.minLength(16), Validators.maxLength(19) ]]),
+      nombre: new FormControl([ '', [Validators.required, Validators.minLength(5), Validators.maxLength(45) ] ]),
+      laboratorio: new FormControl([ '', [Validators.required, Validators.minLength(5), Validators.maxLength(45) ] ]),
+      fechaFabricacion: new FormControl(['', [Validators.required]]),
+      fechaVencimiento: new FormControl(['', [Validators.required]]),
+      stock: new FormControl([ '', [Validators.required, Validators.pattern(/^-?(0|[1-9]\d*)?$/), Validators.minLength(0), Validators.maxLength(10) ] ]),
+      valorUnitario: new FormControl([ '',[Validators.required, Validators.pattern(/^-?[0-9]{1,10}(\.\d{0,2})?$/), Validators.minLength(3), Validators.maxLength(12) ] ]),
+
     });
 
     this.modalEnroleForm = new FormGroup({
-      taNumValidacion: new FormControl(['', [Validators.required, Validators.pattern(/^-?(0|[1-9]\d*)?$/), Validators.minLength(1), Validators.maxLength(3) ]]),
+      meId: new FormControl([ '', [Validators.required, Validators.pattern(/^-?(0|[1-9]\d*)?$/), Validators.minLength(0), Validators.maxLength(10) ] ]),
+      cantidad: new FormControl([ '', [Validators.required, Validators.pattern(/^-?(0|[1-9]\d*)?$/), Validators.minLength(0), Validators.maxLength(10) ] ]),
+      valorTotal: new FormControl([ '',[Validators.required, Validators.pattern(/^-?[0-9]{1,10}(\.\d{0,2})?$/), Validators.minLength(3), Validators.maxLength(12) ] ])
     });
 
-    this.consultarTarjetas();
+    this.consultarMedicamentos();
   }
 
   ngOnInit(): void {
     $('.modal').modal({dismissible: false});
     $('.tooltipped').tooltip({delay: 20});
+    $('.datepicker').datepicker({format: 'yyyy-mm-dd hh:mm:ss'});
   }
 
-  consultarTarjetas(){
-    this.tarjetaService.consultarTarjetas().subscribe({
+  consultarMedicamentos(){
+    this.medicamentoService.consultarMedicamentos().subscribe({
       next: (response: any)=>{
         console.log(response)
-        this.tarjetas = response.data;
+        this.medicamentos = response.bodyResponse;
         this.calculatePagesNumber();
       },
       complete: ()=>{
@@ -72,96 +81,102 @@ export class MedicamentosComponent implements OnInit {
     });
   }
   
-  /* Add or Edit Tarjeta */
-  mergeTarjeta(tarjeta: Tarjeta){
-    if(confirm('Está seguro que quiere agregar la tarjeta del usuario ' + tarjeta.taTitular)){
-      this.tarjetaService.crearTarjeta(this.selectedTarjeta).subscribe({
+  /* agregar o editar Medicamento */
+  mergeMedicamento(medicamento: Medicamento){
+    if(confirm('Está seguro que quiere ' + (medicamento.id ? 'editar' : 'agregar') + ' el medicamento ' + medicamento.nombre)){
+      this.medicamentoService.crearMedicamento(this.selectedMedicamento).subscribe({
         next: (response: any) => {
           console.log(response)
-          if(response.codigoRespuesta !== "00"){
-            alert("ha ocurrido un errror al tratar de crear el usuario")
+          if(response.header.statusCode !== 200){
+            alert("ha ocurrido un errror al tratar de crear el medicamento")
           } else{
-            alert("Creación Exitosa!!!")
+            alert( (medicamento.id ? 'Edición' : 'Creación') + " Exitosa!!!")
           }
         },
         complete: () => {
-          this.consultarTarjetas();
-          this.limpiarTarjeta();
+          this.consultarMedicamentos();
+          this.limpiarMedicamento();
         },
         error: (error) => {
           console.log(error);
-          alert("Error: " + error.error.codigoRespuesta + " - " + error.error.mensaje);
-          // this.consultarTarjetas();
-          this.limpiarTarjeta();
+          alert("Error: " + error.header.statusCode + " - " + error.header.statusMessage);
+          this.limpiarMedicamento();
         }
       });
     }
   }
   
-  /* Delete Tarjeta */
-  eliminarTarjeta(tarjeta: Tarjeta){
-    if(confirm('Está seguro que quiere Eliminar la tarjeta?')){
-      this.tarjetaService.eliminarTarjeta(tarjeta).subscribe({
+  /* eliminar Medicamento */
+  eliminarMedicamento(medicamento: Medicamento){
+    if(confirm('Está seguro que quiere Eliminar la medicamento?')){
+      this.medicamentoService.eliminarMedicamento(medicamento).subscribe({
         next: (response: any) => {
           console.log(response)
-          if(response.codigoRespuesta !== "00"){
-            alert("ha ocurrido un errror al tratar de crear el usuario")
+          if(response.header.statusCode !== 200){
+            alert("ha ocurrido un errror al tratar de eliminar el medicamento")
           } else{
-            alert("Desactivación Exitoso!!!")
+            alert("Eliminacón Exitoso!!!")
           }
         },
         complete: () => {
-          this.consultarTarjetas();
-          this.limpiarTarjeta();
+          this.consultarMedicamentos();
+          this.limpiarMedicamento();
         },
         error: (error) => {
           console.log(error)
-          alert("Error: " + error.error.codigoRespuesta + " - " + error.error.mensaje);
-          // this.consultarTarjetas();
-          this.limpiarTarjeta();
+          alert("Error: " + error.header.statusCode + " - " + error.header.statusMessage);
+          this.limpiarMedicamento();
         }
       });
     }
   }
 
-  /* Delete Tarjeta */
-  enrolarTarjeta(tarjeta: Tarjeta){
-    if(confirm('Está seguro que quiere Enrolar la tarjeta?')){
-      this.tarjetaService.enrolarTarjeta(tarjeta).subscribe({
-        next: (response: any) => {
-          console.log(response)
-          if(response.codigoRespuesta !== "00"){
-            alert("ha ocurrido un errror al tratar de enrolar la tarjeta")
-          } else{
-            alert("Enrolamiento Exitoso!!!")
-          }
-        },
-        complete: () => {
-          this.consultarTarjetas();
-          this.limpiarTarjeta();
-        },
-        error: (error) => {
-          console.log(error);
-          alert("Error: " + error.error.codigoRespuesta + " - " + error.error.mensaje);
-          // this.consultarTarjetas();
-          this.limpiarTarjeta();
+  /* realizar venta*/
+  realizarVenta(medicamento: Medicamento, venta: Venta){
+    venta.cantidad = parseInt(venta.cantidad+"");
+    venta.medicamento = medicamento;
+    venta.medicamento.fechaVencimiento = new Date(venta.medicamento.fechaVencimiento);
+    venta.medicamento.fechaFabricacion = new Date(venta.medicamento.fechaFabricacion);
+    venta.fecha = new Date();
+    venta.valorUnitario = venta.medicamento.valorUnitario;
+    venta.valorTotal = venta.cantidad * (venta.valorUnitario ? venta.valorUnitario : 0);
+    
+    console.log(venta);
+
+    this.ventaService.realizarVenta(venta).subscribe({
+      next: (response: any) => {
+        console.log(response)
+        if(response.header.statusCode !== 200){
+          alert("ha ocurrido un errror al tratar de realizar venta")
+        } else{
+          alert("Venta Exitosa!!!")
         }
-      });
-    }
+      },
+      complete: () => {
+        this.consultarMedicamentos();
+        this.limpiarMedicamento();
+      },
+      error: (error) => {
+        console.log(error);
+        alert("Error: " + error.header.statusCode + " - " + error.header.statusMessage);
+        this.limpiarMedicamento();
+      }
+    });
   }
 
-  limpiarTarjeta(){
-    this.selectedTarjeta = new Tarjeta();
+  limpiarMedicamento(){
+    this.selectedMedicamento = new Medicamento();
   }
   
-  cargarTarjeta(tarjeta: Tarjeta){
-    this.selectedTarjeta = tarjeta;
-    this.selectedTarjeta.taNumValidacion = undefined;
+  cargarMedicamento(medicamento: Medicamento){
+    this.selectedMedicamento = medicamento;
+    this.selectedMedicamento.fechaFabricacion = this.formatDatePipe.transform(medicamento.fechaFabricacion);
+    this.selectedMedicamento.fechaVencimiento = this.formatDatePipe.transform(medicamento.fechaVencimiento);
   }
 
   calculatePagesNumber(){
     this.pages = [];
-    let dataLength = this.tarjetas.length;
+    let dataLength = this.medicamentos.length;
     let numberRows = this.numberRows;
     let pageNum = Math.ceil(dataLength/numberRows)
     for(let i=1; i<=pageNum; i++){

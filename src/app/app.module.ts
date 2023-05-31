@@ -4,8 +4,6 @@ import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { KonexAppModule } from './konex/konex.module';
-import { TarjetaPipe } from './filter/tarjeta.filter.component';
-import { TransaccionPipe } from './filter/transaccion.filter.component';
 
 @NgModule({
 	declarations: [

@@ -6,9 +6,10 @@ import { IndexComponent } from './components/index/index.component';
 import { MedicamentosComponent } from './components/medicamentos/medicamentos.component';
 import { VentasComponent } from './components/ventas/ventas.component';
 import { BrowserModule } from '@angular/platform-browser';
-import { TarjetaPipe } from '../filter/tarjeta.filter.component';
+import { MedicamentoPipe } from '../filter/medicamento.filter.component';
 import { TransaccionPipe } from '../filter/transaccion.filter.component';
 import { HomeComponent } from './components/home/home.component';
+import { DateFormatPipe } from '../filter/date-format.pipe';
 
 
 @NgModule({
@@ -16,8 +17,9 @@ import { HomeComponent } from './components/home/home.component';
     MedicamentosComponent,
     VentasComponent,
     IndexComponent,
-    TarjetaPipe,
+    MedicamentoPipe,
     TransaccionPipe,
+    DateFormatPipe,
     HomeComponent
   ],
   imports: [
@@ -26,7 +28,7 @@ import { HomeComponent } from './components/home/home.component';
     FormsModule, 
     ReactiveFormsModule
   ],
-  providers: [],
+  providers: [DateFormatPipe],
   schemas: [NO_ERRORS_SCHEMA]
 })
 export class KonexAppModule { }

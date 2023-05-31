@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  endpointTarjetaService: "http://localhost:8000/api/tarjeta/",
-  endpointTransaccionService: "http://localhost:8000/api/transaccion/"
+  endpointMedicamentoService: "http://localhost:8080/medicamento",
+  endpointVentaService: "http://localhost:8080/venta"
 };
 
 /*

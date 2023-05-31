@@ -84,7 +84,7 @@ export class VentasComponent implements OnInit {
     }
   }
 
-  /* Delete Tarjeta */
+  /* Delete Medicamento */
   eliminarTransaccion(transaccion: Transaccion){
     if(confirm('Está seguro que quiere Eliminar la transaccion?')){
       this.transaccionService.anularTransaccion(transaccion).subscribe({

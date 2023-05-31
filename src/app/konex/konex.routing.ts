@@ -9,7 +9,7 @@ export const KonexAppRouting: Routes = [
   {
     path: 'home', component: IndexComponent,
     children: [
-      { path: 'tarjetas', component: MedicamentosComponent },
+      { path: 'medicamentos', component: MedicamentosComponent },
       { path: 'ventas', component: VentasComponent },
       { path: 'home', component: HomeComponent },
     ]

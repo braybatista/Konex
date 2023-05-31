@@ -8,7 +8,7 @@ import { Transaccion } from '../models/transaccion';
 })
 export class TransaccionService {
 
-  private endpoint = environment.endpointTransaccionService;
+  private endpoint = environment.endpointVentaService;
 
   constructor(public http: HttpClient) {}
 
