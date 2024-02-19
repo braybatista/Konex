@@ -7,7 +7,7 @@ on:
     branches: [ main ]
 
 env:
-  GH_TOKEN: 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
+  GH_TOKEN: ${{ secrets.PERSONAL_TOKEN }}
 
 jobs:
   release:
