@@ -7,7 +7,7 @@ on:
     branches: [ main ]
 
 env:
-  GH_TOKEN: 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
+  GH_TOKEN: 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
 
 jobs:
   release:
