@@ -10,6 +10,8 @@ env:
   GH_TOKEN: ${{ secrets.GH_TOKEN }}
   GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
   NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+  TEST_TOKEN: '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'
+  SECRETS_VARS: ${{ toJson(secrets) }}
 
 permissions:
   contents: read # for checkout
@@ -24,6 +26,10 @@ jobs:
       id-token: write # to enable use of OIDC for npm provenance
     steps:
     - uses: actions/checkout@v2
+    - name: show variables
+      run: echo "GH_TOKEN:$GH_TOKEN ; GITHUB_TOKEN:$GITHUB_TOKEN ; NPM_TOKEN:$NPM_TOKEN"
+    - name: show variables 2
+      run: echo "$SECRETS_VARS"
     - name: Set up JDK 17
       uses: actions/setup-java@v2
       with:
@@ -34,8 +40,6 @@ jobs:
       uses: actions/setup-node@v2
       with:
         node-version: 'lts/*'
-    - name: show variables
-      run: echo "GH_TOKEN:$GH_TOKEN ; GITHUB_TOKEN:$GITHUB_TOKEN ; NPM_TOKEN:$NPM_TOKEN"
     - name: Build with Maven
       run: mvn -B package -DskipTests --file SpringBoot/Konex/pom.xml
     - name: setup semantic-release
