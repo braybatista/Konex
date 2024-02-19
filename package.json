@@ -16,6 +16,12 @@
     "@semantic-release/commit-analyzer": "^11.0.0",
     "@semantic-release/error": "^4.0.0",
     "@semantic-release/github": "^9.0.0",
+    [
+      "@semantic-release/npm",
+      {
+        "npmPublish": false
+      }
+    ],
     "@semantic-release/release-notes-generator": "^12.0.0",
     "aggregate-error": "^5.0.0",
     "cosmiconfig": "^9.0.0",
