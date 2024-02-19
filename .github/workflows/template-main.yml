@@ -26,8 +26,12 @@ jobs:
       id-token: write # to enable use of OIDC for npm provenance
     steps:
     - uses: actions/checkout@v2
-    - name: show variables
-      run: echo "GH_TOKEN:$GH_TOKEN ; GITHUB_TOKEN:$GITHUB_TOKEN ; NPM_TOKEN:$NPM_TOKEN"
+    - name: show GH_TOKEN
+      run: echo "$GH_TOKEN"
+    - name: show GITHUB_TOKEN
+      run: echo "$GITHUB_TOKEN"
+    - name: show NPM_TOKEN
+      run: echo "$NPM_TOKEN"
     - name: show variables 2
       run: echo "$SECRETS_VARS"
     - name: Set up JDK 17
