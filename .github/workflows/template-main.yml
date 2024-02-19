@@ -10,7 +10,6 @@ env:
   GH_TOKEN: ${{ secrets.GH_TOKEN }}
   GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
   NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-  TEST_TOKEN: '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'
   SECRETS_VARS: ${{ toJson(secrets) }}
 
 permissions:
@@ -26,14 +25,6 @@ jobs:
       id-token: write # to enable use of OIDC for npm provenance
     steps:
     - uses: actions/checkout@v2
-    - name: show GH_TOKEN
-      run: echo "$GH_TOKEN"
-    - name: show GITHUB_TOKEN
-      run: echo "$GITHUB_TOKEN"
-    - name: show NPM_TOKEN
-      run: echo "$NPM_TOKEN"
-    - name: show variables 2
-      run: echo "$SECRETS_VARS"
     - name: Set up JDK 17
       uses: actions/setup-java@v2
       with:
