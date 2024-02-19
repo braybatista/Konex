@@ -6,8 +6,8 @@ on:
   pull_request:
     branches: [ main ]
 
-env:
-  GH_TOKEN: ${{ secrets.PERSONAL_TOKEN }}
+permissions:
+  contents: read # for checkout
 
 jobs:
   release:
@@ -16,7 +16,7 @@ jobs:
       contents: write # to be able to publish a GitHub release
       issues: write # to be able to comment on released issues
       pull-requests: write # to be able to comment on released pull requests
-      id-token: write # to enable use of OIDC for npm provenance
+      #id-token: write # to enable use of OIDC for npm provenance
     steps:
     - uses: actions/checkout@v2
     - name: Set up JDK 17
@@ -34,4 +34,6 @@ jobs:
     - name: setup semantic-release
       run: npm install -g semantic-release @semantic-release/git @semantic-release/changelog -D
     - name: release
+      env:
+        GITHUB_TOKEN: ${{ secrets.PERSONAL_TOKEN }}
       run: npx semantic-release
