@@ -47,7 +47,7 @@ jobs:
         npm install --prefix Angular/Konex/
         npm run build --prefix Angular/Konex/
     - name: setup semantic-release
-      run: npm install -g semantic-release @semantic-release/git @semantic-release/changelog -D
+      run: npm install -g semantic-release @semantic-release/git @semantic-release/changelog @semantic-release/github -D
     - name: release
       run: npx semantic-release@21.0.2
     
