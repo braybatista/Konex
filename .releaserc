@@ -2,15 +2,20 @@
   "repositoryUrl": "https://github.com/braybatista/Konex.git",
   "branches": ["master", "main"],
   "plugins": [
-      "@semantic-release/commit-analyzer",
-      "@semantic-release/release-notes-generator",
-      [
-        "@semantic-release/github", {
-          "assets": [
-            { "path": "Angular/**", "label": "CSS distribution" },
-            { "path": "SpringBoot/Konex/target/Konex-0.0.1-SNAPSHOT.jar", "label": "JS distribution" }
-          ]
-        }
-      ]
+    "@semantic-release/commit-analyzer",
+    "@semantic-release/release-notes-generator",
+    [
+      "@semantic-release/npm",
+      {
+        "npmPublish": false,
+        "tarballDir": "dist"
+      }
+    ],
+    [
+      "@semantic-release/github",
+      {
+        "assets": "Angular/"
+      }
     ]
+  ]
 }
