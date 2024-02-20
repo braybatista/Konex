@@ -42,6 +42,12 @@ jobs:
         npm run ng analytics off --prefix Angular/Konex/
         npm install --prefix Angular/Konex/
         npm run build --prefix Angular/Konex/
+    #Zipping the directory dir into dir.zip:
+    - uses: montudor/action-zip@v1
+      with:
+        args: zip -qq -r dir.zip Angular/Konex/dist/konex-app
+    - name: validate zip file
+      run: ls Angular/Konex/dist/
     - name: setup semantic-release
       run: npm install -g semantic-release @semantic-release/git @semantic-release/changelog @semantic-release/github -D
     - name: release
