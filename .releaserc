@@ -9,11 +9,6 @@
           "npmPublish": false,
           "tarballDir": "dist"
         }
-      ],
-      [
-        "@semantic-release/github",{
-          "assets": "SpringBoot/Konex/target/Konex-0.0.1-SNAPSHOT.jar"
-        }
       ]
     ]
 }
