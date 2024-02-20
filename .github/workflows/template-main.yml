@@ -55,7 +55,7 @@ jobs:
     - name: release
       run: npx semantic-release@21.0.2
     - name: Upload artifact for deployment job
-        uses: actions/upload-artifact@v4
-        with:
-          name: node-app
-          path: ./Angular/Konex/dist
+      uses: actions/upload-artifact@v4
+      with:
+        name: node-app
+        path: ./Angular/Konex/dist
