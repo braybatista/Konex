@@ -50,7 +50,7 @@ jobs:
     - name: Install zip package
       uses: montudor/action-zip@v1
     - name: Zip Angular dist
-      run: zip -qq -r dist.zip dist Angular/Konex/dist/konex-app
+      run: zip -qq -r dist.zip Angular/Konex/dist
       working-directory: Angular/Konex/dist
     - name: validate zip file
       run: |
