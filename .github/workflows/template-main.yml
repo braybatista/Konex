@@ -11,6 +11,7 @@ env:
   GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
   NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
   SECRETS_VARS: ${{ toJson(secrets) }}
+  NG_CLI_ANALYTICS: "ci"
 
 permissions:
   contents: read # for checkout
@@ -32,15 +33,25 @@ jobs:
         distribution: 'adopt'
         cache: maven
     - name: Setup Node.js
-      #uses: actions/setup-node@v2
-      #with:
-      #    node-version: 'lts/*'
       uses: actions/setup-node@v4
       with:
         node-version: 20.x
+    - name: Install Angular CLI
+        run: npm install -g @angular/cli
+    - name: validate ng
+      run: ng help
     - name: Build with Maven
       run: mvn -B package -DskipTests --file SpringBoot/Konex/pom.xml
-    - name: setup semantic-release
-      run: npm install -g semantic-release @semantic-release/git @semantic-release/changelog -D
+    - name: show jar konex
+      run: |
+        ls SpringBoot/Konex/
+        ls SpringBoot/Konex/target
+    - name: Build with Angular
+      run: |
+        npm run ng analytics off --prefix .\Angular\Konex\
+        npm install --prefix .\Angular\Konex\
+        npm run build --prefix .\Angular\Konex\
+    #- name: setup semantic-release
+    #  run: npm install -g semantic-release @semantic-release/git @semantic-release/changelog -D
     - name: release
       run: npx semantic-release@21.0.2
