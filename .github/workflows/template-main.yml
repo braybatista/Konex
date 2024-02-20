@@ -37,7 +37,7 @@ jobs:
       with:
         node-version: 20.x
     - name: Install Angular CLI
-        run: npm install -g @angular/cli
+      run: npm install -g @angular/cli
     - name: validate ng
       run: ng help
     - name: Build with Maven
