@@ -1,4 +1,5 @@
 {
+  "repositoryUrl": "https://github.com/braybatista/Konex.git",
   "branches": ["master", "main"],
   "plugins": [
       "@semantic-release/commit-analyzer",
@@ -6,8 +7,8 @@
       [
         "@semantic-release/github", {
           "assets": [
-            { "path": "Angular/*", "label": "CSS distribution" },
-            { "path": "Konex/SpringBoot/Konex/target/Konex-0.0.1-SNAPSHOT.jar", "label": "JS distribution" }
+            { "path": "Angular/**", "label": "CSS distribution" },
+            { "path": "SpringBoot/Konex/target/Konex-0.0.1-SNAPSHOT.jar", "label": "JS distribution" }
           ]
         }
       ]
