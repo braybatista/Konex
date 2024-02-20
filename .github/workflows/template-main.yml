@@ -43,14 +43,12 @@ jobs:
     - name: Build with Maven
       run: mvn -B package -DskipTests --file SpringBoot/Konex/pom.xml
     - name: show jar konex
-      run: |
-        ls SpringBoot/Konex/
-        ls SpringBoot/Konex/target
+      run: ls SpringBoot/Konex/target
     - name: Build with Angular
       run: |
-        npm run ng analytics off --prefix .\Angular\Konex\
-        npm install --prefix .\Angular\Konex\
-        npm run build --prefix .\Angular\Konex\
+        npm run ng analytics off --prefix Angular/Konex/
+        npm install --prefix Angular/Konex/
+        npm run build --prefix Angular/Konex/
     #- name: setup semantic-release
     #  run: npm install -g semantic-release @semantic-release/git @semantic-release/changelog -D
     - name: release
