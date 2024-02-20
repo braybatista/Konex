@@ -41,20 +41,11 @@ jobs:
       run: npm install -g @angular/cli
     - name: Build with Maven
       run: mvn -B package -DskipTests --file SpringBoot/Konex/pom.xml
-    - name: show jar konex
-      run: ls SpringBoot/Konex/target
     - name: Build with Angular
       run: |
         npm run ng analytics off --prefix Angular/Konex/
         npm install --prefix Angular/Konex/
         npm run build --prefix Angular/Konex/
-    - name: show dist folder
-      run: ls Angular/Konex/dist
-    - name: Upload jar for deployment job
-      uses: actions/upload-artifact@v4
-      with:
-        name: node-app
-        path: ./Angular/Konex/dist
     - name: setup semantic-release
       run: npm install -g semantic-release @semantic-release/git @semantic-release/changelog -D
     - name: release
