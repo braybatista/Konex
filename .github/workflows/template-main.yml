@@ -50,12 +50,13 @@ jobs:
         npm run build --prefix Angular/Konex/
     - name: show dist folder
       run: ls Angular/Konex/dist
-    - name: setup semantic-release
-      run: npm install -g semantic-release @semantic-release/git @semantic-release/changelog -D
-    - name: release
-      run: npx semantic-release@21.0.2
-    - name: Upload artifact for deployment job
+    - name: Upload jar for deployment job
       uses: actions/upload-artifact@v4
       with:
         name: node-app
         path: ./Angular/Konex/dist
+    - name: setup semantic-release
+      run: npm install -g semantic-release @semantic-release/git @semantic-release/changelog -D
+    - name: release
+      run: npx semantic-release@21.0.2
+    
