@@ -7,12 +7,10 @@ on:
     branches: [ main ]
 
 env:
-  GH_TOKEN: ${{ secrets.GH_TOKEN }}
   GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
   NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
   NG_CLI_ANALYTICS: "ci"
   GITHUB_API_URL: ${{ secrets.GH_API_URL }}
-  GITHUB_PREFIX: ""
 
 permissions:
   contents: write
@@ -47,5 +45,7 @@ jobs:
     - name: setup semantic-release
       run: npm install -g semantic-release @semantic-release/git @semantic-release/changelog @semantic-release/github -D
     - name: release
-      run: npx semantic-release@21.0.2
+      env:
+        GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+      run: yarn semantic-release
     
