@@ -5,7 +5,10 @@
       "@semantic-release/release-notes-generator",
       [
         "@semantic-release/github", {
-          "assets": ["SpringBoot/Konex/target/**"]
+          "assets": [
+            { "path": "Angular/Konex/dist/*", "label": "CSS distribution" },
+            { "path": "SpringBoot/Konex/target/*", "label": "JS distribution" }
+          ]
         }
       ]
     ]

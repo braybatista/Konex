@@ -10,8 +10,9 @@ env:
   GH_TOKEN: ${{ secrets.GH_TOKEN }}
   GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
   NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-  SECRETS_VARS: ${{ toJson(secrets) }}
   NG_CLI_ANALYTICS: "ci"
+  GH_URL: ${{ secrets.GH_API_URL }}
+  GITHUB_URL: ${{ secrets.GH_API_URL }}
 
 permissions:
   contents: read # for checkout
@@ -53,3 +54,8 @@ jobs:
       run: npm install -g semantic-release @semantic-release/git @semantic-release/changelog -D
     - name: release
       run: npx semantic-release@21.0.2
+    - name: Upload artifact for deployment job
+        uses: actions/upload-artifact@v4
+        with:
+          name: node-app
+          path: ./Angular/Konex/dist
