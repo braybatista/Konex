@@ -24,12 +24,8 @@ jobs:
   release:
     runs-on: ubuntu-latest
     steps:
+    
     - uses: actions/checkout@v4
-    - run: sudo apt-get install libtinfo5
-    - uses: actions/setup-elixir@v1
-      with:
-        otp-version: '25'
-        elixir-version: '1.14.3'
 
     - name: Set up JDK 17
       uses: actions/setup-java@v4
@@ -47,10 +43,10 @@ jobs:
       run: npm install -g @angular/cli
     
     - name: Set up Elixir 1.14.3 and Otp 25
-      uses: actions/setup-elixir@v1
+      uses: erlef/setup-beam@v1
       with:
-        otp-version: '22.2'
-        elixir-version: '1.9.4'
+        elixir-version: '1.14.3' # Define the elixir version [required]
+        otp-version: '25' # Define the OTP version [required]
         
     # - name: Restore dependencies cache
     #   uses: actions/cache@v3
