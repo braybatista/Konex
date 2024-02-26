@@ -5,7 +5,7 @@ defmodule ReactiveCommons.MixProject do
 
   def project do
     [
-      app: :Konex,
+      app: :Konex_Test_App,
       version: @version,
       elixir: "~> 1.13",
       deps: deps(),
@@ -13,7 +13,7 @@ defmodule ReactiveCommons.MixProject do
       package: package(),
       source_url: "https://github.com/braybatista/Konex",
       xref: [exclude: [:crypto]],
-      name: "Konex",
+      name: "Konex_Test_App",
     ]
   end
 
