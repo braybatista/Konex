@@ -5,7 +5,7 @@ defmodule ReactiveCommons.MixProject do
 
   def project do
     [
-      app: :Hello_world_app,
+      app: :Konex_world_app,
       version: @version,
       deps: deps(),
       description: description(),
@@ -39,7 +39,7 @@ defmodule ReactiveCommons.MixProject do
   defp package() do
     [
       # This option is only needed when you don't want to use the OTP application name
-      name: "Konex",
+      name: "Konex_world_app",
       files: ["test", "mix.exs", ".formatter.exs", "mix.lock"],
       maintainers: ["Brayan Batista Zuniga"],
       licenses: ["Apache-2.0"],
