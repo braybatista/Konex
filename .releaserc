@@ -17,6 +17,11 @@
           { "path": "SpringBoot/Konex/target/Konex-0.0.1-SNAPSHOT.jar", "label": "Java distribution" }
         ]
       }
+    ],
+    [
+      "@semantic-release/exec", {
+        "publishCmd": "echo \"${nextRelease.version}\" >> VERSION-TAG.env"
+      }
     ]
   ]
 }

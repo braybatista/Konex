@@ -5,6 +5,8 @@ on:
     branches: [ main ]
   pull_request:
     branches: [ main ]
+  release:
+    types: [ created ]
 
 env:
   GITHUB_TOKEN: ${{ secrets.GH_TOKEN_2 }}
@@ -23,31 +25,82 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
+
     - name: Set up JDK 17
       uses: actions/setup-java@v4
       with:
         java-version: '17'
         distribution: 'adopt'
         cache: maven
+
     - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
         node-version: 20.x
-    - name: Install Angular CLI
+    
+    - name: SetUp Angular CLI
       run: npm install -g @angular/cli
+    
+    - name: Set up Elixir 1.14.3 and Otp 25
+      uses: actions/setup-elixir@v1
+      with:
+        otp-version: '25'
+        elixir-version: '1.14.3'
+        
+    # - name: Restore dependencies cache
+    #   uses: actions/cache@v3
+    #   with:
+    #     path: deps
+    #     key: ${{ runner.os }}-mix-${{ hashFiles('**/mix.lock') }}
+    #     restore-keys: ${{ runner.os }}-mix-
+
+    # - name: Install dependencies
+    #   run: mix deps.get
+
+    # - name: Run tests
+    #   run: mix test
+
+    # - name: Set release env
+    #   if: github.event_name == 'release'
+    #   run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+
+    # - name: Upgrade mix.exs
+    #   if: github.event_name == 'release'
+    #   run: sed -i 's/@version \".*\"/@version "${{ env.RELEASE_VERSION }}"/g' mix.exs
+
+    # - name: Publish to HEX
+    #   if: github.event_name == 'release'
+    #   run: mix hex.publish --replace --yes
+    #   env:
+    #     HEX_API_KEY: ${{ secrets.HEX_API_KEY }}
+      
     - name: Build with Maven
       run: mvn -B package -DskipTests --file SpringBoot/Konex/pom.xml
+    
     - name: Build with Angular
       run: |
         npm run ng analytics off --prefix Angular/Konex/
         npm install --prefix Angular/Konex/
         npm run build --prefix Angular/Konex/
+    
     - name: Install zip package
       uses: montudor/action-zip@v1
+    
     - name: Zip Angular dist
       run: zip -qq -r dist.zip konex-app
       working-directory: Angular/Konex/dist
+    
     - name: setup semantic-release
       run: npm install -g semantic-release @semantic-release/git @semantic-release/changelog @semantic-release/github -D
+    
     - name: release
       run: npx -p @semantic-release/changelog semantic-release
+
+    - name: Validate VERSION-TAG.env
+      run: ls
+
+    - name: Set variables
+      run: |
+        VER=$(cat VERSION-TAG.env)
+        echo "$VER"
+        echo "VERSION=$VER" >> $GITHUB_ENV
