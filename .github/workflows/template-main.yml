@@ -11,6 +11,7 @@ on:
 env:
   GITHUB_TOKEN: ${{ secrets.GH_TOKEN_2 }}
   NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+  HEX_API_KEY: ${{ secrets.HEX_API_KEY }}
   NG_CLI_ANALYTICS: "ci"
   GITHUB_API_URL: "https://api.github.com"
   PUBLISH_ARTIFACT: true
@@ -28,20 +29,20 @@ jobs:
 
     - uses: actions/checkout@v4
 
-    # - name: Set up JDK 17
-    #   uses: actions/setup-java@v4
-    #   with:
-    #     java-version: '17'
-    #     distribution: 'adopt'
-    #     cache: maven
+    - name: Set up JDK 17
+      uses: actions/setup-java@v4
+      with:
+        java-version: '17'
+        distribution: 'adopt'
+        cache: maven
 
     - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
         node-version: 20.x
     
-    # - name: SetUp Angular CLI
-    #   run: npm install -g @angular/cli
+    - name: SetUp Angular CLI
+      run: npm install -g @angular/cli
     
     - name: Set up Elixir 1.14.3 and Otp 25
       uses: erlef/setup-beam@v1
@@ -49,22 +50,21 @@ jobs:
         elixir-version: '1.14.3'
         otp-version: '25'
 
-      
-    # - name: Build with Maven
-    #   run: mvn -B package -DskipTests --file SpringBoot/Konex/pom.xml
+    - name: Build with Maven
+      run: mvn -B package -DskipTests --file SpringBoot/Konex/pom.xml
     
-    # - name: Build with Angular
-    #   run: |
-    #     npm run ng analytics off --prefix Angular/Konex/
-    #     npm install --prefix Angular/Konex/
-    #     npm run build --prefix Angular/Konex/
+    - name: Build with Angular
+      run: |
+        npm run ng analytics off --prefix Angular/Konex/
+        npm install --prefix Angular/Konex/
+        npm run build --prefix Angular/Konex/
     
-    # - name: Install zip package
-    #   uses: montudor/action-zip@v1
+    - name: Install zip package
+      uses: montudor/action-zip@v1
     
-    # - name: Zip Angular dist
-    #   run: zip -qq -r dist.zip konex-app
-    #   working-directory: Angular/Konex/dist
+    - name: Zip Angular dist
+      run: zip -qq -r dist.zip konex-app
+      working-directory: Angular/Konex/dist
     
     - name: setup semantic-release
       run: npm install -g semantic-release @semantic-release/exec @semantic-release/changelog @semantic-release/github -D
@@ -84,15 +84,6 @@ jobs:
         path: Elixir/Konex/deps
         key: ${{ runner.os }}-mix-${{ hashFiles('**/Elixir/Konex/mix.lock') }}
         restore-keys: ${{ runner.os }}-mix-
-
-    - name: Show files
-      run: |
-        ls
-        echo "------------------------------"
-        ls Elixir/Konex/
-        echo "------------------------------"
-        ls Elixir/Konex/deps
-        echo "------------------------------"
 
     - name: Install Mix dependencies
       run: mix deps.get
@@ -119,8 +110,8 @@ jobs:
     #     name: Release Bot
     #     email: release-bot@bancolombia.com.co
 
-    # - name: Publish to HEX
-    #   if: ${{ env.PUBLISH_ARTIFACT }} == true
-    #   run: mix hex.publish --replace --yes
-    #   env:
-    #     HEX_API_KEY: ${{ secrets.HEX_API_KEY }}
+    - name: Publish to HEX
+      if: ${{ env.PUBLISH_ARTIFACT }} == true
+      run: mix hex.publish --replace --yes
+      env:
+        HEX_API_KEY: ${{ secrets.HEX_API_KEY }}
