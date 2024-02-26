@@ -106,11 +106,11 @@ jobs:
 
     - name: Install dependencies
       run: mix deps.get
-      working-directory: Elixir/Konex/
+      working-directory: Elixir/Konex
     
     # - name: Run tests
     #   run: mix test
-    #   working-directory: Elixir/Konex/
+    #   working-directory: Elixir/Konex
 
     # - name: Publish to HEX
     #   if: github.event_name == 'release'
