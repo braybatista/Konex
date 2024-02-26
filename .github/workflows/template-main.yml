@@ -97,13 +97,13 @@ jobs:
     - name: release
       run: npx -p @semantic-release/changelog -p @semantic-release/exec semantic-release
 
-    - name: Validate VERSION-TAG.env
-      run: ls
-
     - name: Set variables
       run: |
         VER=$(cat VERSION-TAG.env)
         echo "RELEASE_VERSION -> ${{ env.RELEASE_VERSION }}"
         echo "NEXT_RELEASE_VERSION -> ${{ env.NEXT_RELEASE_VERSION }}"
         echo "$VER"
-        echo "VERSION=$VER" >> $GITHUB_ENV
+        echo "RELEASE_VERSION=$VER" >> $GITHUB_ENV
+    
+    - name: Show files
+      run: ls
