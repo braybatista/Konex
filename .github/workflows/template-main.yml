@@ -13,6 +13,7 @@ env:
   NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
   NG_CLI_ANALYTICS: "ci"
   GITHUB_API_URL: "https://api.github.com"
+  PUBLISH_ARTIFACT: true
 
 permissions:
   contents: write
@@ -108,12 +109,16 @@ jobs:
       run: mix deps.get
       working-directory: Elixir/Konex
     
-    # - name: Run tests
-    #   run: mix test
-    #   working-directory: Elixir/Konex
+    - name: Run tests
+      run: mix test
+      working-directory: Elixir/Konex
+
+    - name: Upgrade mix.exs
+      if: ${{PUBLISH_ARTIFACT}} == true
+      run: sed -i 's/@version \".*\"/@version "$VER"/g' mix.exs
 
     # - name: Publish to HEX
-    #   if: github.event_name == 'release'
+    #   if: ${{PUBLISH_ARTIFACT}} == true
     #   run: mix hex.publish --replace --yes
     #   env:
     #     HEX_API_KEY: ${{ secrets.HEX_API_KEY }}
