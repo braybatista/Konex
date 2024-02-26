@@ -8,11 +8,6 @@ defmodule ReactiveCommons.MixProject do
       app: :konex_test_app,
       version: @version,
       elixir: "~> 1.13",
-      docs: [
-        extras: ["README.md"],
-        main: "readme",
-        source_ref: "v#{@version}"
-      ],
       deps: deps(),
       description: description(),
       package: package(),
