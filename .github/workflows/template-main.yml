@@ -113,5 +113,6 @@ jobs:
     - name: Publish to HEX
       if: ${{ env.PUBLISH_ARTIFACT }} == true
       run: mix hex.publish --replace --yes
+      working-directory: Elixir/Konex
       env:
         HEX_API_KEY: ${{ secrets.HEX_API_KEY }}

@@ -9,6 +9,8 @@ defmodule ReactiveCommons.MixProject do
       version: @version,
       deps: deps(),
       description: description(),
+      package: package(),
+      source_url: "https://github.com/braybatista/Konex"
     ]
   end
 
@@ -38,7 +40,7 @@ defmodule ReactiveCommons.MixProject do
     [
       # This option is only needed when you don't want to use the OTP application name
       name: "Konex",
-      files: ["test", "mix.exs", "formatter.exs", "mix.lock"],
+      files: ["test", "mix.exs", ".formatter.exs", "mix.lock"],
       maintainers: ["Brayan Batista Zuniga"],
       licenses: ["Apache-2.0"],
       links: %{"GitHub" => "https://github.com/braybatista/Konex"}
