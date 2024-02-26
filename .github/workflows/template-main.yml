@@ -85,7 +85,6 @@ jobs:
         path: Elixir/Konex/deps
         key: ${{ runner.os }}-mix-${{ hashFiles('**/mix.lock') }}
         restore-keys: ${{ runner.os }}-mix-
-        working-directory: Elixir/Konex/
 
     - name: Show files
       run: |
