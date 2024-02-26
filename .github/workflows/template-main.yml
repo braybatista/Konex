@@ -24,7 +24,7 @@ jobs:
   release:
     runs-on: ubuntu-latest
     steps:
-    
+
     - uses: actions/checkout@v4
 
     - name: Set up JDK 17
@@ -92,10 +92,10 @@ jobs:
       working-directory: Angular/Konex/dist
     
     - name: setup semantic-release
-      run: npm install -g semantic-release @semantic-release/git @semantic-release/changelog @semantic-release/github -D
+      run: npm install -g semantic-release @semantic-release/exec @semantic-release/changelog @semantic-release/github -D
     
     - name: release
-      run: npx -p @semantic-release/changelog semantic-release
+      run: npx -p @semantic-release/changelog -p @semantic-release/exec semantic-release
 
     - name: Validate VERSION-TAG.env
       run: ls
