@@ -78,7 +78,7 @@ jobs:
         echo "$VER"
         echo "RELEASE_VERSION=$VER" >> $GITHUB_ENV
     
-    - name: Restore dependencies cache 2
+    - name: Restore dependencies cache
       uses: actions/cache@v4
       with:
         path: Elixir/Konex/deps
@@ -95,7 +95,7 @@ jobs:
 
     - name: Upgrade mix.exs
       if: ${{ env.PUBLISH_ARTIFACT }} == true
-      run: sed -i 's/@version \".*\"/@version "${{ env.GITHUB_TOKEN }}"/g' mix.exs
+      run: sed -i 's/@version \".*\"/@version "${{ env.RELEASE_VERSION  }}"/g' mix.exs
       working-directory: Elixir/Konex
 
     # - name: Commit And Push version
