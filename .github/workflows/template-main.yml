@@ -104,9 +104,9 @@ jobs:
         ls Elixir/Konex/deps
         echo "------------------------------"
 
-    # - name: Install dependencies
-    #   run: mix deps.get
-    #   working-directory: Elixir/Konex/
+    - name: Install dependencies
+      run: mix deps.get
+      working-directory: Elixir/Konex/
     
     # - name: Run tests
     #   run: mix test
