@@ -17,12 +17,8 @@ defmodule ReactiveCommons.MixProject do
     ]
   end
 
-  defp hello(_) do
-    Mix.shell().info("Hello world")
-  end
-
   defp description() do
-    "Domain driven async abstractions like Domain Event Bus, Event subscriptions/emit, Async Command handling and Async Req/Reply."
+    "Konex app hello world."
   end
 
   # Run "mix help deps" to learn about dependencies.
