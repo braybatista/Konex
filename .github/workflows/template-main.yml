@@ -114,11 +114,11 @@ jobs:
       working-directory: Elixir/Konex
 
     - name: Upgrade mix.exs
-      if: ${{PUBLISH_ARTIFACT}} == true
+      if: ${{ env.PUBLISH_ARTIFACT }} == true
       run: sed -i 's/@version \".*\"/@version "$VER"/g' mix.exs
 
     # - name: Publish to HEX
-    #   if: ${{PUBLISH_ARTIFACT}} == true
+    #   if: ${{ env.PUBLISH_ARTIFACT }} == true
     #   run: mix hex.publish --replace --yes
     #   env:
     #     HEX_API_KEY: ${{ secrets.HEX_API_KEY }}
