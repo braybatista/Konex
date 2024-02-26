@@ -83,19 +83,24 @@ jobs:
       uses: actions/cache@v3
       with:
         path: Elixir/Konex/deps
-        key: ${{ runner.os }}-mix-${{ hashFiles('**/Elixir/Konex/mix.lock') }}
+        key: ${{ runner.os }}-mix-${{ hashFiles('**/mix.lock') }}
         restore-keys: ${{ runner.os }}-mix-
+        working-directory: Elixir/Konex/
 
     - name: Show files
       run: |
         ls
+        echo "------------------------------"
         ls Elixir/Konex/
+        echo "------------------------------"
 
     # - name: Install dependencies
-    #   run: mix Elixir/Konex/deps.get
+    #   run: mix deps.get
+    #   working-directory: Elixir/Konex/
     
     # - name: Run tests
-    #   run: mix test Elixir/Konex/test
+    #   run: mix test
+    #   working-directory: Elixir/Konex/
 
     # - name: Publish to HEX
     #   if: github.event_name == 'release'
