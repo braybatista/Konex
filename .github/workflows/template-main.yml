@@ -25,7 +25,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
-    - run: apt install libncurses5
+    - run: sudo apt-get install libtinfo5
     - uses: actions/setup-elixir@v1
       with:
         otp-version: '25'
