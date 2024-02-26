@@ -5,7 +5,7 @@ defmodule ReactiveCommons.MixProject do
 
   def project do
     [
-      app: "Hello world app",
+      app: :Hello_world_app,
       version: @version,
       deps: deps(),
     ]
