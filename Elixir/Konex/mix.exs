@@ -7,10 +7,13 @@ defmodule ReactiveCommons.MixProject do
     [
       app: :Konex,
       version: @version,
+      elixir: "~> 1.13",
       deps: deps(),
       description: description(),
       package: package(),
-      source_url: "https://github.com/braybatista/Konex"
+      source_url: "https://github.com/braybatista/Konex",
+      xref: [exclude: [:crypto]],
+      name: "Konex",
     ]
   end
 
@@ -25,14 +28,8 @@ defmodule ReactiveCommons.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      # {:dep_from_hexpm, "~> 0.3.0"},
-      {:poison, "~> 5.0"},
-      {:amqp, "~> 3.2"},
-      {:uuid, "~> 1.1"},
-      {:ex_doc, ">= 0.0.0", only: :dev, runtime: false},
-      {:telemetry, "~> 1.2"},
-      {:mock, "~> 0.3", only: :test}
-      # {:dep_from_git, git: "https://github.com/braybatista/Konex.git", tag: "1.0.0"}
+      {:decimal, "~> 1.0"},
+      {:ex_doc, "~> 0.14", only: :dev, runtime: false}
     ]
   end
 
