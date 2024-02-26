@@ -39,7 +39,7 @@ defmodule ReactiveCommons.MixProject do
   defp package() do
     [
       # This option is only needed when you don't want to use the OTP application name
-      files: ["test", "mix.exs", ".formatter.exs", "mix.lock"],
+      files: ["mix.exs", ".formatter.exs"],
       maintainers: ["Brayan Batista Zuniga"],
       licenses: ["Apache-2.0"],
       links: %{"GitHub" => "https://github.com/braybatista/Konex"}

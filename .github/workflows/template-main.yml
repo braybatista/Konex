@@ -86,8 +86,10 @@ jobs:
         restore-keys: ${{ runner.os }}-mix-
 
     - name: Install Mix dependencies
-      run: mix deps.get
+      run: mix deps.get && mix deps.compile
       working-directory: Elixir/Konex
+      env:
+        SKIP_GIT_HOOKS: 'true'
     
     - name: Run Mix tests
       run: mix test
