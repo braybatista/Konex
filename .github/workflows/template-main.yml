@@ -79,12 +79,13 @@ jobs:
         echo "$VER"
         echo "RELEASE_VERSION=$VER" >> $GITHUB_ENV
     
-    # - name: Validate conditions
-    #   if: ${{ (vars.PUBLISH_ARTIFACT == true) && (env.RELEASE_VERSION != '') }}
-    #   run: |
-    #     echo "RELEASE_VERSION=${{ env.RELEASE_VERSION }}"
-    #     echo "GITHUB_API_URL=${{ env.GH_API_URL }}"
-    #     echo "PUBLISH_ARTIFACT=${{ vars.PUBLISH_ARTIFACT }}"
+    - name: Validate conditions
+      run: |
+        echo "RELEASE_VERSION=${{ env.RELEASE_VERSION }}"
+        echo "RELEASE_VERSION=${RELEASE_VERSION}"
+        echo "RELEASE_VERSION=$VER"
+        echo "GITHUB_API_URL=${{ env.GH_API_URL }}"
+        echo "PUBLISH_ARTIFACT=${{ vars.PUBLISH_ARTIFACT }}"
     
     # - name: Restore dependencies cache
     #   uses: actions/cache@v4
