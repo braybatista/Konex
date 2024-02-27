@@ -83,8 +83,8 @@ jobs:
       run: |
         echo "RELEASE_VERSION=${{ env.RELEASE_VERSION }}"
         echo "RELEASE_VERSION=${RELEASE_VERSION}"
-        echo "CONDITION RELEASE_VERSION=${{ env.RELEASE_VERSION != "" }}"
-        echo "CONDITION PUBLISH_ARTIFACT=${{ env.PUBLISH_ARTIFACT != "" }}"
+        echo "CONDITION RELEASE_VERSION=${{ env.RELEASE_VERSION != '' }}"
+        echo "CONDITION PUBLISH_ARTIFACT=${{ env.PUBLISH_ARTIFACT != '' }}"
         echo "GITHUB_API_URL=${{ env.GITHUB_API_URL }}"
         echo "PUBLISH_ARTIFACT=${{ env.PUBLISH_ARTIFACT }}"
     
