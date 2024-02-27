@@ -96,14 +96,14 @@ jobs:
     #     restore-keys: ${{ runner.os }}-mix-
 
     - name: Install Mix dependencies
-      if: ${{ (vars.PUBLISH_ARTIFACT == true) && (env.RELEASE_VERSION != '') }}
+      if: ${{ env.PUBLISH_ARTIFACT == true && env.RELEASE_VERSION != '' }}
       run: mix deps.get && mix deps.compile
       working-directory: Elixir/Konex
       env:
         SKIP_GIT_HOOKS: 'true'
     
     - name: Run Mix tests
-      if: ${{ (vars.PUBLISH_ARTIFACT == true) && (env.RELEASE_VERSION != '') }}
+      if: ${{ (env.PUBLISH_ARTIFACT == true) && (env.RELEASE_VERSION != '') }}
       run: mix test
       working-directory: Elixir/Konex
 
@@ -125,7 +125,7 @@ jobs:
     #     email: release-bot@bancolombia.com.co
 
     - name: Publish to HEX
-      if: ${{ (vars.PUBLISH_ARTIFACT == true) && (env.RELEASE_VERSION != '') }}
+      if: ${{ (env.PUBLISH_ARTIFACT == true) && (env.RELEASE_VERSION != '') }}
       run: mix hex.publish --replace --yes
       working-directory: Elixir/Konex
       env:
