@@ -95,7 +95,7 @@ jobs:
         push-branch: main
         commit-message: '[skip release] Upgrade version to ${{ env.RELEASE_VERSION }}'
         force-add: "true"
-        files: mix.exs
+        files: Elixir/Konex/mix.exs
         name: Release Bot
         email: bbatist@bancolombia.com.co
 
