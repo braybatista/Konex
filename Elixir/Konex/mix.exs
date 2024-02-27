@@ -32,6 +32,9 @@ defmodule ReactiveCommons.MixProject do
   defp package() do
     [
       # This option is only needed when you don't want to use the OTP application name
+      # name: "konex_test_app",
+      # The organization the package belongs to. The package will be published to the organization repository, defaults = i"hexpm" repository.
+      # organization: "bancolombia",
       files: ["mix.exs", ".formatter.exs"],
       maintainers: ["Brayan Batista Zuniga"],
       licenses: ["Apache-2.0"],
