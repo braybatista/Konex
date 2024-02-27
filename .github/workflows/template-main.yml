@@ -91,7 +91,7 @@ jobs:
       run: sed -i 's/@version \".*\"/@version "${{ env.RELEASE_VERSION  }}"/g' mix.exs
       working-directory: Elixir/Konex
 
-    # testing, qorking but we need to prevent next run
+    # testing, qorking but we need to prevent next run 
     - name: Commit And Push version
       if: ${{ ( env.COMMIT_PUSH == 'true' ) }}
       uses: github-actions-x/commit@v2.9
