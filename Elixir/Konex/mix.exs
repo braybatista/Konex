@@ -1,7 +1,7 @@
 defmodule ReactiveCommons.MixProject do
   use Mix.Project
 
-  @version "1.5.34"
+  @version "1.5.35"
 
   def project do
     [
