@@ -37,10 +37,10 @@ jobs:
     #     distribution: 'adopt'
     #     cache: maven
 
-    - name: Setup Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: 20.x
+    # - name: Setup Node.js
+    #   uses: actions/setup-node@v4
+    #   with:
+    #     node-version: 20.x
 
     # - name: Install zip package
     #   uses: montudor/action-zip@v1
@@ -48,11 +48,11 @@ jobs:
     # - name: SetUp Angular CLI
     #   run: npm install -g @angular/cli
     
-    - name: Set up Elixir 1.14.3 and Otp 25
-      uses: erlef/setup-beam@v1
-      with:
-        elixir-version: '1.14.3'
-        otp-version: '25'
+    # - name: Set up Elixir 1.14.3 and Otp 25
+    #   uses: erlef/setup-beam@v1
+    #   with:
+    #     elixir-version: '1.14.3'
+    #     otp-version: '25'
 
     # - name: Build with Maven
     #   run: mvn -B package -DskipTests --file SpringBoot/Konex/pom.xml
@@ -67,24 +67,23 @@ jobs:
     #   run: zip -qq -r dist.zip konex-app
     #   working-directory: Angular/Konex/dist
     
-    - name: setup semantic-release
-      run: npm install -g semantic-release @semantic-release/exec @semantic-release/changelog @semantic-release/github -D
+    # - name: setup semantic-release
+    #   run: npm install -g semantic-release @semantic-release/exec @semantic-release/changelog @semantic-release/github -D
     
-    - name: release
-      run: npx -p @semantic-release/changelog -p @semantic-release/exec semantic-release
+    # - name: release
+    #   run: npx -p @semantic-release/changelog -p @semantic-release/exec semantic-release
 
-    - name: Set variables From VERSION-TAG.env
-      run: |
-        VER=$(cat VERSION-TAG.env)
-        echo "$VER"
-        echo "RELEASE_VERSION=$VER" >> $GITHUB_ENV
+    # - name: Set variables From VERSION-TAG.env
+    #   run: |
+    #     VER=$(cat VERSION-TAG.env)
+    #     echo "$VER"
+    #     echo "RELEASE_VERSION=$VER" >> $GITHUB_ENV
     
     - name: Validate conditions
-      if: |
-        (${{ env.PUBLISH_ARTIFACT }} == "true" && ${{ env.RELEASE_VERSION }} != "")
       run: |
-        echo "RELEASE_VERSION= ${{ env.RELEASE_VERSION }}"
-        echo "PUBLISH_ARTIFACT = $PUBLISH_ARTIFACT"
+        echo "RELEASE_VERSION = ${{ env.RELEASE_VERSION }}"
+        echo "PUBLISH_ARTIFACT = ${{ env.PUBLISH_ARTIFACT }}
+        echo "PUBLISH_ARTIFACT = ${PUBLISH_ARTIFACT}"
     
     # - name: Restore dependencies cache
     #   uses: actions/cache@v4
