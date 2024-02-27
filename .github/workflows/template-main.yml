@@ -78,15 +78,9 @@ jobs:
     #     VER=$(cat VERSION-TAG.env)
     #     echo "$VER"
     #     echo "RELEASE_VERSION=$VER" >> $GITHUB_ENV
-
-    - name: show variables
-      run: |
-        echo "${RELEASE_VERSION}"
-        echo "$RELEASE_VERSION"
     
     - name: Validate conditions
-      if: ${{ (vars.PUBLISH_ARTIFACT == 'true') && (env.RELEASE_VERSION != '') }}
-        #(${{ vars.PUBLISH_ARTIFACT }} == false && ${{ env.RELEASE_VERSION }} != "")
+      if: ${{ (vars.PUBLISH_ARTIFACT == true) && (env.RELEASE_VERSION != '') }}
       run: |
         echo "RELEASE_VERSION=${{ env.RELEASE_VERSION }}"
         echo "GITHUB_API_URL=${{ env.GH_API_URL }}"
@@ -110,12 +104,12 @@ jobs:
     #   working-directory: Elixir/Konex
 
     # - name: Upgrade mix.exs
-    #   if: ${{ env.PUBLISH_ARTIFACT }} == true
+    #   if: ${{ (vars.PUBLISH_ARTIFACT == 'true') && (env.RELEASE_VERSION != '') }}
     #   run: sed -i 's/@version \".*\"/@version "${{ env.RELEASE_VERSION  }}"/g' mix.exs
     #   working-directory: Elixir/Konex
 
     # - name: Commit And Push version
-    #   if: ${{ env.PUBLISH_ARTIFACT }} == true
+    #   if: ${{ (vars.PUBLISH_ARTIFACT == 'true') && (env.RELEASE_VERSION != '') }}
     #   uses: github-actions-x/commit@v2.9
     #   with:
     #     github-token: ${{ env.GITHUB_TOKEN }}
@@ -127,8 +121,7 @@ jobs:
     #     email: release-bot@bancolombia.com.co
 
     # - name: Publish to HEX
-    #   if: |
-    #     (${{ env.PUBLISH_ARTIFACT }} == "true" && ${{ env.RELEASE_VERSION }} != "")
+    #   if: ${{ (vars.PUBLISH_ARTIFACT == 'true') && (env.RELEASE_VERSION != '') }}
     #   run: mix hex.publish --replace --yes
     #   working-directory: Elixir/Konex
     #   env:
