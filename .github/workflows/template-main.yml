@@ -48,15 +48,6 @@ jobs:
     
     - name: release
       run: npx -p @semantic-release/changelog -p @semantic-release/exec semantic-release
-
-    #testing
-    - name: Check for file VERSION-TAG.env
-      run: |
-        ls -l
-        echo "VERSION-TAG.env: |${{ hashFiles('VERSION-TAG.env') }}|"
-        echo "VERSION-TAG.env2: |${{ hashFiles('VERSION-TAG.env2') }}|"
-        echo "script.sql: |${{ hashFiles('script.sql') }}|"
-        echo "FILE_VERSION_TAG_EXISTS=true" >> $GITHUB_ENV
       
     - name: Validate conditions
       if: ${{ env.DEBUG_MODE == 'true' }}
@@ -73,7 +64,7 @@ jobs:
         echo "FILE_VERSION_TAG_EXISTS=${{ env.FILE_VERSION_TAG_EXISTS }}"
 
     - name: Set variables From VERSION-TAG.env
-      if: ${{ env.FILE_VERSION_TAG_EXISTS == 'true' }}
+      if: ${{ hashFiles('VERSION-TAG.env') != '' }}
       run: |
         VER=$(cat VERSION-TAG.env)
         echo "$VER"
