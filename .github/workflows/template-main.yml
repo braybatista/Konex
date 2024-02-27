@@ -12,7 +12,6 @@ env:
   GITHUB_TOKEN: ${{ secrets.GH_TOKEN_2 }}
   NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
   HEX_API_KEY: ${{ secrets.HEX_API_KEY }}
-  NG_CLI_ANALYTICS: "ci"
   GITHUB_API_URL: "https://api.github.com"
   PUBLISH_ARTIFACT: ${{ secrets.PUBLISH_ARTIFACT }}
   RELEASE_VERSION: ""
@@ -25,6 +24,7 @@ permissions:
 
 jobs:
   release:
+    environment: ACTIONS_ENV
     runs-on: ubuntu-latest
     steps:
 
@@ -79,27 +79,34 @@ jobs:
         echo "$VER"
         echo "RELEASE_VERSION=$VER" >> $GITHUB_ENV
     
-    - name: Restore dependencies cache
-      uses: actions/cache@v4
-      with:
-        path: Elixir/Konex/deps
-        key: ${{ runner.os }}-mix-${{ hashFiles('**/Elixir/Konex/mix.lock') }}
-        restore-keys: ${{ runner.os }}-mix-
-
-    - name: Install Mix dependencies
-      run: mix deps.get && mix deps.compile
-      working-directory: Elixir/Konex
-      env:
-        SKIP_GIT_HOOKS: 'true'
+    - name: Validate conditions
+      if: |
+        (${{ env.PUBLISH_ARTIFACT }} == "true" && ${{ env.RELEASE_VERSION }} != "")
+      run: |
+        echo "RELEASE_VERSION= ${{ env.RELEASE_VERSION }}"
+        echo "PUBLISH_ARTIFACT = ${{ env.PUBLISH_ARTIFACT }}"
     
-    - name: Run Mix tests
-      run: mix test
-      working-directory: Elixir/Konex
+    # - name: Restore dependencies cache
+    #   uses: actions/cache@v4
+    #   with:
+    #     path: Elixir/Konex/deps
+    #     key: ${{ runner.os }}-mix-${{ hashFiles('**/Elixir/Konex/mix.lock') }}
+    #     restore-keys: ${{ runner.os }}-mix-
 
-    - name: Upgrade mix.exs
-      if: ${{ env.PUBLISH_ARTIFACT }} == true
-      run: sed -i 's/@version \".*\"/@version "${{ env.RELEASE_VERSION  }}"/g' mix.exs
-      working-directory: Elixir/Konex
+    # - name: Install Mix dependencies
+    #   run: mix deps.get && mix deps.compile
+    #   working-directory: Elixir/Konex
+    #   env:
+    #     SKIP_GIT_HOOKS: 'true'
+    
+    # - name: Run Mix tests
+    #   run: mix test
+    #   working-directory: Elixir/Konex
+
+    # - name: Upgrade mix.exs
+    #   if: ${{ env.PUBLISH_ARTIFACT }} == true
+    #   run: sed -i 's/@version \".*\"/@version "${{ env.RELEASE_VERSION  }}"/g' mix.exs
+    #   working-directory: Elixir/Konex
 
     # - name: Commit And Push version
     #   if: ${{ env.PUBLISH_ARTIFACT }} == true
@@ -113,10 +120,10 @@ jobs:
     #     name: Release Bot
     #     email: release-bot@bancolombia.com.co
 
-    - name: Publish to HEX
-      if: |
-        (${{ env.PUBLISH_ARTIFACT }} == true && ${{ env.PUBLISH_ARTIFACT }} != "")
-      run: mix hex.publish --replace --yes
-      working-directory: Elixir/Konex
-      env:
-        HEX_API_KEY: ${{ secrets.HEX_API_KEY }}
+    # - name: Publish to HEX
+    #   if: |
+    #     (${{ env.PUBLISH_ARTIFACT }} == "true" && ${{ env.RELEASE_VERSION }} != "")
+    #   run: mix hex.publish --replace --yes
+    #   working-directory: Elixir/Konex
+    #   env:
+    #     HEX_API_KEY: ${{ secrets.HEX_API_KEY }}
