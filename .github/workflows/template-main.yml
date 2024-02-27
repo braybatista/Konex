@@ -27,6 +27,7 @@ jobs:
       PUBLISH_ARTIFACT: ${{ vars.PUBLISH_ARTIFACT }}
       RELEASE_VERSION: ${{ vars.RELEASE_VERSION }}
       DEBUG_MODE: ${{ vars.DEBUG_MODE }}
+      COMMIT_PUSH: ${{ vars.COMMIT_PUSH }}
 
     steps:
     - uses: actions/checkout@v4
@@ -64,6 +65,8 @@ jobs:
         echo "CONDITION TRUE PUBLISH_ARTIFACT=${{ env.PUBLISH_ARTIFACT == 'true' }}"
         echo "CONDITION FALSE PUBLISH_ARTIFACT=${{ env.PUBLISH_ARTIFACT == 'false' }}"
         echo "GITHUB_API_URL=${{ env.GITHUB_API_URL }}"
+        echo "COMMIT_PUSH=${{ env.COMMIT_PUSH }}"
+        echo "DEBUG_MODE=${{ env.DEBUG_MODE }}"
 
     - name: Install Mix dependencies
       if: ${{ ( env.PUBLISH_ARTIFACT == 'true' ) && ( env.RELEASE_VERSION != '' ) }}
@@ -78,21 +81,22 @@ jobs:
       working-directory: Elixir/Konex
 
     - name: Upgrade mix.exs
-      if: ${{ ( env.PUBLISH_ARTIFACT == 'true' ) && ( env.RELEASE_VERSION != '' ) }}
+      if: ${{ ( ( env.COMMIT_PUSH == 'true' ) && ( env.RELEASE_VERSION != '' ) ) || ( ( env.PUBLISH_ARTIFACT == 'true' ) && ( env.RELEASE_VERSION != '' ) ) }}
       run: sed -i 's/@version \".*\"/@version "${{ env.RELEASE_VERSION  }}"/g' mix.exs
       working-directory: Elixir/Konex
 
-    # - name: Commit And Push version
-    #   if: ${{ ( env.PUBLISH_ARTIFACT == 'true' ) && ( env.RELEASE_VERSION != '' ) }}
-    #   uses: github-actions-x/commit@v2.9
-    #   with:
-    #     github-token: ${{ env.GITHUB_TOKEN }}
-    #     push-branch: main
-    #     commit-message: '[skip release] Upgrade version to ${{ env.RELEASE_VERSION }}'
-    #     force-add: "true"
-    #     files: mix.exs
-    #     name: Release Bot
-    #     email: bbatist@bancolombia.com.co
+    # testing
+    - name: Commit And Push version
+      if: ${{ ( ( env.COMMIT_PUSH == 'true' ) && ( env.RELEASE_VERSION != '' ) ) || ( ( env.PUBLISH_ARTIFACT == 'true' ) && ( env.RELEASE_VERSION != '' ) ) }}
+      uses: github-actions-x/commit@v2.9
+      with:
+        github-token: ${{ env.GITHUB_TOKEN }}
+        push-branch: main
+        commit-message: '[skip release] Upgrade version to ${{ env.RELEASE_VERSION }}'
+        force-add: "true"
+        files: mix.exs
+        name: Release Bot
+        email: bbatist@bancolombia.com.co
 
     - name: Publish to HEX
       if: ${{ ( env.PUBLISH_ARTIFACT == 'true' ) && ( env.RELEASE_VERSION != '' ) }}
