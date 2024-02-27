@@ -80,10 +80,12 @@ jobs:
     #     echo "RELEASE_VERSION=$VER" >> $GITHUB_ENV
     
     - name: Validate conditions
+      if: ${{ (vars.PUBLISH_ARTIFACT == 'false') && (env.RELEASE_VERSION != '') }}
+        #(${{ vars.PUBLISH_ARTIFACT }} == false && ${{ env.RELEASE_VERSION }} != "")
       run: |
         echo "RELEASE_VERSION = ${{ env.RELEASE_VERSION }}"
-        echo "PUBLISH_ARTIFACT = ${{ env.PUBLISH_ARTIFACT }}"
-        echo "PUBLISH_ARTIFACT = ${{ vars.PUBLISH_ARTIFACT }}"
+        echo "GITHUB_API_URL = ${{ env.GH_API_URL }}"
+        echo "PUBLISH_ARTIFACT=${{ vars.PUBLISH_ARTIFACT }}"
     
     # - name: Restore dependencies cache
     #   uses: actions/cache@v4
