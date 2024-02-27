@@ -80,10 +80,12 @@ jobs:
     #     echo "RELEASE_VERSION=$VER" >> $GITHUB_ENV
 
     - name: show variables
-      run: echo "${{ env.RELEASE_VERSION }}"
+      run: |
+        echo "${RELEASE_VERSION}"
+        echo "$RELEASE_VERSION"
     
     - name: Validate conditions
-      if: ${{ (vars.PUBLISH_ARTIFACT == 'false') && (env.RELEASE_VERSION != '') }}
+      if: ${{ (vars.PUBLISH_ARTIFACT == 'true') && (env.RELEASE_VERSION != '') }}
         #(${{ vars.PUBLISH_ARTIFACT }} == false && ${{ env.RELEASE_VERSION }} != "")
       run: |
         echo "RELEASE_VERSION=${{ env.RELEASE_VERSION }}"
