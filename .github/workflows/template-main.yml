@@ -92,11 +92,11 @@ jobs:
     #     force-add: "true"
     #     files: mix.exs
     #     name: Release Bot
-    #     email: release-bot@bancolombia.com.co
+    #     email: bbatist@bancolombia.com.co
 
-    # - name: Publish to HEX
-    #   if: ${{ ( env.PUBLISH_ARTIFACT == 'true' ) && ( env.RELEASE_VERSION != '' ) }}
-    #   run: mix hex.publish --replace --yes
-    #   working-directory: Elixir/Konex
-    #   env:
-    #     HEX_API_KEY: ${{ secrets.HEX_API_KEY }}
+    - name: Publish to HEX
+      if: ${{ ( env.PUBLISH_ARTIFACT == 'true' ) && ( env.RELEASE_VERSION != '' ) }}
+      run: mix hex.publish --replace --yes
+      working-directory: Elixir/Konex
+      env:
+        HEX_API_KEY: ${{ secrets.HEX_API_KEY }}
