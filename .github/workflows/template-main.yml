@@ -82,7 +82,7 @@ jobs:
     - name: Validate conditions
       run: |
         echo "RELEASE_VERSION = ${{ env.RELEASE_VERSION }}"
-        echo "PUBLISH_ARTIFACT = ${{ env.PUBLISH_ARTIFACT }}
+        echo "PUBLISH_ARTIFACT = ${{ env.PUBLISH_ARTIFACT }}"
         echo "PUBLISH_ARTIFACT = ${PUBLISH_ARTIFACT}"
     
     # - name: Restore dependencies cache
