@@ -83,7 +83,7 @@ jobs:
       run: |
         echo "RELEASE_VERSION = ${{ env.RELEASE_VERSION }}"
         echo "PUBLISH_ARTIFACT = ${{ env.PUBLISH_ARTIFACT }}"
-        echo "PUBLISH_ARTIFACT = ${PUBLISH_ARTIFACT}"
+        echo "PUBLISH_ARTIFACT = ${{ vars.PUBLISH_ARTIFACT }}"
     
     # - name: Restore dependencies cache
     #   uses: actions/cache@v4
