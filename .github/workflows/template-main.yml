@@ -14,7 +14,7 @@ env:
   HEX_API_KEY: ${{ secrets.HEX_API_KEY }}
   NG_CLI_ANALYTICS: "ci"
   GITHUB_API_URL: "https://api.github.com"
-  PUBLISH_ARTIFACT: true
+  PUBLISH_ARTIFACT: ${{ secrets.PUBLISH_ARTIFACT }}
   RELEASE_VERSION: ""
 
 permissions:
@@ -114,7 +114,8 @@ jobs:
     #     email: release-bot@bancolombia.com.co
 
     - name: Publish to HEX
-      if: ${{ env.PUBLISH_ARTIFACT }} == true
+      if: |
+        (${{ env.PUBLISH_ARTIFACT }} == true && ${{ env.PUBLISH_ARTIFACT }} != "")
       run: mix hex.publish --replace --yes
       working-directory: Elixir/Konex
       env:
