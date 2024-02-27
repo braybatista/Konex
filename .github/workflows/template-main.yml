@@ -8,14 +8,6 @@ on:
   release:
     types: [ created ]
 
-env:
-  GITHUB_TOKEN: ${{ secrets.GH_TOKEN_2 }}
-  NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-  HEX_API_KEY: ${{ secrets.HEX_API_KEY }}
-  GITHUB_API_URL: "https://api.github.com"
-  #PUBLISH_ARTIFACT: ${{ secrets.PUBLISH_ARTIFACT }}
-  RELEASE_VERSION: "---"
-
 permissions:
   contents: write
   issues: write
@@ -26,8 +18,16 @@ jobs:
   release:
     environment: ACTIONS_ENV
     runs-on: ubuntu-latest
-    steps:
 
+    env:
+      GITHUB_TOKEN: ${{ secrets.GH_TOKEN_2 }}
+      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      HEX_API_KEY: ${{ secrets.HEX_API_KEY }}
+      GITHUB_API_URL: ${{ vars.GH_API_URL }}
+      PUBLISH_ARTIFACT: ${{ vars.PUBLISH_ARTIFACT }}
+      RELEASE_VERSION: ${{ vars.RELEASE_VERSION }}
+
+    steps:
     - uses: actions/checkout@v4
 
     # - name: Set up JDK 17
@@ -83,8 +83,8 @@ jobs:
       if: ${{ (vars.PUBLISH_ARTIFACT == 'false') && (env.RELEASE_VERSION != '') }}
         #(${{ vars.PUBLISH_ARTIFACT }} == false && ${{ env.RELEASE_VERSION }} != "")
       run: |
-        echo "RELEASE_VERSION = ${{ env.RELEASE_VERSION }}"
-        echo "GITHUB_API_URL = ${{ env.GH_API_URL }}"
+        echo "RELEASE_VERSION=${{ env.RELEASE_VERSION }}"
+        echo "GITHUB_API_URL=${{ env.GH_API_URL }}"
         echo "PUBLISH_ARTIFACT=${{ vars.PUBLISH_ARTIFACT }}"
     
     # - name: Restore dependencies cache
