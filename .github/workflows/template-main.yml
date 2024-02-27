@@ -87,7 +87,7 @@ jobs:
       working-directory: Elixir/Konex
 
     - name: Upgrade mix.exs
-      if: ${{ ( env.COMMIT_PUSH == 'true' ) || ( env.PUBLISH_ARTIFACT == 'true' ) }}
+      if: ${{ ( env.COMMIT_PUSH == 'true' ) }}
       run: sed -i 's/@version \".*\"/@version "${{ env.RELEASE_VERSION  }}"/g' mix.exs
       working-directory: Elixir/Konex
 
