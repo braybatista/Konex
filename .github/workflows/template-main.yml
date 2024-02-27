@@ -25,7 +25,7 @@ jobs:
       HEX_API_KEY: ${{ secrets.HEX_API_KEY }}
       GITHUB_API_URL: ${{ vars.GH_API_URL }}
       PUBLISH_ARTIFACT: ${{ vars.PUBLISH_ARTIFACT }}
-      RELEASE_VERSION: ${{ vars.RELEASE_VERSION }}
+      # RELEASE_VERSION: ${{ vars.RELEASE_VERSION }}
       DEBUG_MODE: ${{ vars.DEBUG_MODE }}
       COMMIT_PUSH: ${{ vars.COMMIT_PUSH }}
 
