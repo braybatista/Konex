@@ -78,6 +78,9 @@ jobs:
     #     VER=$(cat VERSION-TAG.env)
     #     echo "$VER"
     #     echo "RELEASE_VERSION=$VER" >> $GITHUB_ENV
+
+    - name: show variables
+      run: echo "${{ env.RELEASE_VERSION }}"
     
     - name: Validate conditions
       if: ${{ (vars.PUBLISH_ARTIFACT == 'false') && (env.RELEASE_VERSION != '') }}
