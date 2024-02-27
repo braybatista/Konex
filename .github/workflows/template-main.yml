@@ -55,6 +55,7 @@ jobs:
         ls -l
         echo "VERSION-TAG.env: |${{ hashFiles('VERSION-TAG.env') }}|"
         echo "VERSION-TAG.env2: |${{ hashFiles('VERSION-TAG.env2') }}|"
+        echo "script.sql: |${{ hashFiles('script.sql') }}|"
         echo "FILE_VERSION_TAG_EXISTS=true" >> $GITHUB_ENV
       
     - name: Validate conditions
