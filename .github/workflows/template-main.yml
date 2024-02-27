@@ -82,10 +82,11 @@ jobs:
     - name: Validate conditions
       run: |
         echo "RELEASE_VERSION=${{ env.RELEASE_VERSION }}"
-        echo "RELEASE_VERSION=${RELEASE_VERSION}"
-        echo "RELEASE_VERSION=$VER"
-        echo "GITHUB_API_URL=${{ env.GH_API_URL }}"
-        echo "PUBLISH_ARTIFACT=${{ vars.PUBLISH_ARTIFACT }}"
+        echo "RELEASE_VERSION=${{ RELEASE_VERSION }}"
+        echo "CONDITION RELEASE_VERSION=${{ env.RELEASE_VERSION != "" }}"
+        echo "CONDITION PUBLISH_ARTIFACT=${{ env.PUBLISH_ARTIFACT != "" }}"
+        echo "GITHUB_API_URL=${{ env.GITHUB_API_URL }}"
+        echo "PUBLISH_ARTIFACT=${{ env.PUBLISH_ARTIFACT }}"
     
     # - name: Restore dependencies cache
     #   uses: actions/cache@v4
