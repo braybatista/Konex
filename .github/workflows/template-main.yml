@@ -72,7 +72,8 @@ jobs:
 
     - name: Install Mix dependencies
       if: ${{ ( env.PUBLISH_ARTIFACT == 'true' ) || ( env.COMMIT_PUSH == 'true' ) }}
-      run: mix deps.get && mix deps.compile
+      run: mix do local.hex --force, local.rebar --force && mix do deps.clean --unused, deps.get, deps.compile && mix deps.compile
+
       working-directory: Elixir/Konex
     
     - name: Run Mix tests
