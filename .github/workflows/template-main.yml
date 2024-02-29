@@ -20,7 +20,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      GITHUB_TOKEN: ${{ secrets.GH_TOKEN_2 }}
+      GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
       NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
       HEX_API_KEY: ${{ secrets.HEX_API_KEY }}
       GITHUB_API_URL: ${{ vars.GH_API_URL }}
@@ -74,8 +74,6 @@ jobs:
       if: ${{ ( env.PUBLISH_ARTIFACT == 'true' ) || ( env.COMMIT_PUSH == 'true' ) }}
       run: mix deps.get && mix deps.compile
       working-directory: Elixir/Konex
-      env:
-        SKIP_GIT_HOOKS: 'true'
     
     - name: Run Mix tests
       if: ${{ ( env.PUBLISH_ARTIFACT == 'true' ) || ( env.COMMIT_PUSH == 'true' ) }}
