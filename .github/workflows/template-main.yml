@@ -27,6 +27,9 @@ jobs:
       PUBLISH_ARTIFACT: ${{ vars.PUBLISH_ARTIFACT }}
       DEBUG_MODE: ${{ vars.DEBUG_MODE }}
       COMMIT_PUSH: ${{ vars.COMMIT_PUSH }}
+      ELIXIR_VERSION: ${{ vars.ELIXIR_VERSION }}
+      OTP_VERSION: ${{ vars.OTP_VERSION }}
+      SKIP_GIT_HOOKS: 'true'
 
     steps:
     - uses: actions/checkout@v4
@@ -36,70 +39,70 @@ jobs:
       with:
         node-version: 20.x
     
-    - name: Set up Elixir 1.14.3 and Otp 25
+    - name: Set up Elixir ${{ env.ELIXIR_VERSION }} and Otp ${{ env.OTP_VERSION }}
       uses: erlef/setup-beam@v1
       with:
-        elixir-version: '1.14.3'
-        otp-version: '25'
+        elixir-version: ${{ env.ELIXIR_VERSION }}
+        otp-version: ${{ env.OTP_VERSION }}
     
-    - name: setup semantic-release
-      run: npm install -g semantic-release @semantic-release/changelog @semantic-release/github -D
+    # - name: setup semantic-release
+    #   run: npm install -g semantic-release @semantic-release/changelog @semantic-release/github -D
     
-    - name: release
-      run: npx -p @semantic-release/changelog semantic-release
+    # - name: release
+    #   run: npx -p @semantic-release/changelog semantic-release
       
-    - name: Validate conditions
-      if: ${{ env.DEBUG_MODE == 'true' }}
-      run: |
-        echo "RELEASE_VERSION=${{ env.RELEASE_VERSION }}"
-        echo "CONDITION RELEASE_VERSION != '';=${{ env.RELEASE_VERSION != '' }}"
-        echo "CONDITION PUBLISH_ARTIFACT == '';=${{ env.RELEASE_VERSION == '' }}"
-        echo "CONDITION PUBLISH_ARTIFACT == TRUE;=${{ env.PUBLISH_ARTIFACT == 'true' }}"
-        echo "CONDITION PUBLISH_ARTIFACT == FALSE;=${{ env.PUBLISH_ARTIFACT == 'false' }}"
-        echo "GITHUB_API_URL=${{ env.GITHUB_API_URL }}"
-        echo "PUBLISH_ARTIFACT=${{ env.PUBLISH_ARTIFACT }}"
-        echo "COMMIT_PUSH=${{ env.COMMIT_PUSH }}"
-        echo "DEBUG_MODE=${{ env.DEBUG_MODE }}"
+    # - name: Validate conditions
+    #   if: ${{ env.DEBUG_MODE == 'true' }}
+    #   run: |
+    #     echo "RELEASE_VERSION=${{ env.RELEASE_VERSION }}"
+    #     echo "CONDITION RELEASE_VERSION != '';=${{ env.RELEASE_VERSION != '' }}"
+    #     echo "CONDITION PUBLISH_ARTIFACT == '';=${{ env.RELEASE_VERSION == '' }}"
+    #     echo "CONDITION PUBLISH_ARTIFACT == TRUE;=${{ env.PUBLISH_ARTIFACT == 'true' }}"
+    #     echo "CONDITION PUBLISH_ARTIFACT == FALSE;=${{ env.PUBLISH_ARTIFACT == 'false' }}"
+    #     echo "GITHUB_API_URL=${{ env.GITHUB_API_URL }}"
+    #     echo "PUBLISH_ARTIFACT=${{ env.PUBLISH_ARTIFACT }}"
+    #     echo "COMMIT_PUSH=${{ env.COMMIT_PUSH }}"
+    #     echo "DEBUG_MODE=${{ env.DEBUG_MODE }}"
 
-    - name: Set variables From git tag command
-      if: ${{ ( env.PUBLISH_ARTIFACT == 'true' ) || ( env.COMMIT_PUSH == 'true' ) }}
-      run: |
-        echo "$VER"
-        echo "RELEASE_VERSION=$(git tag | sort --version-sort | tail -n1 | tr -d 'v')" >> $GITHUB_ENV
+    # - name: Set variables From git tag command
+    #   if: ${{ ( env.PUBLISH_ARTIFACT == 'true' ) || ( env.COMMIT_PUSH == 'true' ) }}
+    #   run: |
+    #     echo "$VER"
+    #     echo "RELEASE_VERSION=$(git tag | sort --version-sort | tail -n1 | tr -d 'v')" >> $GITHUB_ENV
 
-    - name: Install Mix dependencies
-      if: ${{ ( env.PUBLISH_ARTIFACT == 'true' ) || ( env.COMMIT_PUSH == 'true' ) }}
-      run: mix deps.get && mix deps.compile
-      working-directory: Elixir/Konex
-      env:
-        SKIP_GIT_HOOKS: 'true'
+    # - name: Install Mix dependencies
+    #   if: ${{ ( env.PUBLISH_ARTIFACT == 'true' ) || ( env.COMMIT_PUSH == 'true' ) }}
+    #   run: mix deps.get && mix deps.compile
+    #   working-directory: Elixir/Konex
+    #   env:
+    #     SKIP_GIT_HOOKS: 'true'
     
-    - name: Run Mix tests
-      if: ${{ ( env.PUBLISH_ARTIFACT == 'true' ) || ( env.COMMIT_PUSH == 'true' ) }}
-      run: mix test
-      working-directory: Elixir/Konex
+    # - name: Run Mix tests
+    #   if: ${{ ( env.PUBLISH_ARTIFACT == 'true' ) || ( env.COMMIT_PUSH == 'true' ) }}
+    #   run: mix test
+    #   working-directory: Elixir/Konex
 
-    - name: Upgrade mix.exs
-      if: ${{ ( env.COMMIT_PUSH == 'true' ) }}
-      run: sed -i 's/@version \".*\"/@version "${{ env.RELEASE_VERSION  }}"/g' mix.exs
-      working-directory: Elixir/Konex
+    # - name: Upgrade mix.exs
+    #   if: ${{ ( env.COMMIT_PUSH == 'true' ) }}
+    #   run: sed -i 's/@version \".*\"/@version "${{ env.RELEASE_VERSION  }}"/g' mix.exs
+    #   working-directory: Elixir/Konex
 
-    # testing, working but we need to prevent next run 
-    - name: Commit And Push version
-      if: ${{ ( env.COMMIT_PUSH == 'true' ) }}
-      uses: github-actions-x/commit@v2.9
-      with:
-        github-token: ${{ env.GITHUB_TOKEN }}
-        push-branch: main
-        commit-message: '[skip release] [skip ci] Upgrade version to ${{ env.RELEASE_VERSION }}'
-        force-add: "true"
-        files: Elixir/Konex/mix.exs
-        name: Release Bot
-        email: bbatist@bancolombia.com.co
+    # # testing, working but we need to prevent next run 
+    # - name: Commit And Push version
+    #   if: ${{ ( env.COMMIT_PUSH == 'true' ) }}
+    #   uses: github-actions-x/commit@v2.9
+    #   with:
+    #     github-token: ${{ env.GITHUB_TOKEN }}
+    #     push-branch: main
+    #     commit-message: '[skip release] [skip ci] Upgrade version to ${{ env.RELEASE_VERSION }}'
+    #     force-add: "true"
+    #     files: Elixir/Konex/mix.exs
+    #     name: Release Bot
+    #     email: bbatist@bancolombia.com.co
 
-    - name: Publish to HEX
-      if: ${{ ( env.PUBLISH_ARTIFACT == 'true' ) }}
-      run: mix hex.publish --replace --yes
-      working-directory: Elixir/Konex
-      env:
-        HEX_API_KEY: ${{ secrets.HEX_API_KEY }}
+    # - name: Publish to HEX
+    #   if: ${{ ( env.PUBLISH_ARTIFACT == 'true' ) }}
+    #   run: mix hex.publish --replace --yes
+    #   working-directory: Elixir/Konex
+    #   env:
+    #     HEX_API_KEY: ${{ secrets.HEX_API_KEY }}
