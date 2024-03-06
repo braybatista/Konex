@@ -10,14 +10,11 @@ Se pueden utilizar herramientas como commitizen o commit-lint para ayudar a los 
 
 La siguiente tabla muestra qué mensaje de confirmación le proporciona qué tipo de versión cuando se ejecuta la versión semántica (usando la configuración predeterminada):
 
-|Commit message	  |Release type                                                                    |
-|-----------------|--------------------------------------------------------------------------------|
-|fix(pencil):     |stop graphite breaking when too much pressure applied	Patch Fix Release      |
-|feat(pencil):    |add 'graphiteWidth' option	Minor Feature Release                              |
-|perf(pencil):    |remove graphiteWidth option                                                     |
-|BREAKING CHANGE: |The graphiteWidth option has been removed.                                      |
-|The default graphite width of 10mm is always used for performance reasons.	Major Breaking Release |
-|(Note that the BREAKING CHANGE:  token must be in the footer of the commit)                       |
+| Commit Message                                                                                                                                                                                   | Release type                                                                                                    |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------- |
+| `fix(pencil): stop graphite breaking when too much pressure applied`                                                                                                                             | ~~Patch~~ Fix Release                                                                                           |
+| `feat(pencil): add 'graphiteWidth' option`                                                                                                                                                       | ~~Minor~~ Feature Release                                                                                       |
+| `perf(pencil): remove graphiteWidth option`<br><br>`BREAKING CHANGE: The graphiteWidth option has been removed.`<br>`The default graphite width of 10mm is always used for performance reasons.` | ~~Major~~ Breaking Release <br /> (Note that the `BREAKING CHANGE: ` token must be in the footer of the commit) |
 
 dentro de la documentación de angular sobre convenciones de mensajes se tienen estos adicionales:
 
