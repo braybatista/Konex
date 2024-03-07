@@ -1,4 +1,4 @@
-[![semantic-release: angular](https://img.shields.io/badge/semantic--release-angular-e10079?logo=semantic-release)](https://github.com/semantic-release/semantic-release)
+[![semantic-release: angular](semantic-release-url-badge)][semantic-release-url]
 
 # Semantic Release
 ## Commit message format
@@ -16,7 +16,7 @@ La siguiente tabla muestra qué mensaje de confirmación le proporciona qué tip
 | `fix(pencil): stop graphite breaking when too much pressure applied`                                                                                                                             | ~~Patch~~ Fix Release                                                                                           |
 | `feat(pencil): add 'graphiteWidth' option`                                                                                                                                                       | ~~Minor~~ Feature Release                                                                                       |
 | `perf(pencil): remove graphiteWidth option`<br><br>`BREAKING CHANGE: The graphiteWidth option has been removed.`<br>`The default graphite width of 10mm is always used for performance reasons.` | ~~Major~~ Breaking Release <br /> (Note that the `BREAKING CHANGE: ` token must be in the footer of the commit) |
-**fuente:** [link a la fuente.](https://github.com/semantic-release/semantic-release?tab=readme-ov-file#Commit%20message%20format)
+**[link a la fuente.](https://github.com/semantic-release/semantic-release?tab=readme-ov-file#Commit%20message%20format)**
 
 dentro de la documentación de angular sobre convenciones de mensajes se tienen estos adicionales:
 
@@ -32,3 +32,6 @@ dentro de la documentación de angular sobre convenciones de mensajes se tienen 
 ## excluir commit del análisis del plugin:
 
 Todas las confirmaciones que contengan [skip release] or [release skip] en su mensaje se excluirán del análisis de confirmación y no participarán en la determinación del tipo de versión.
+
+[semantic-release-url-badge]: https://img.shields.io/badge/semantic--release-angular-e10079?logo=semantic-release
+[semantic-release-url]: https://github.com/semantic-release/semantic-release
