@@ -1,4 +1,4 @@
-[![semantic-release: angular](semantic-release-url-badge)][semantic-release-url]
+[![semantic-release: angular][semantic-release-url-badge]][semantic-release-url]
 
 # Semantic Release
 ## Commit message format
