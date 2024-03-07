@@ -1,5 +1,5 @@
-## ¿Como funciona?
-### Commit message format
+# Semantic Release
+## Commit message format
 semantic-release utiliza los mensajes de confirmación para determinar el impacto de los cambios en el release; Siguiendo las convenciones para mensajes de confirmación, semantic-release determina automáticamente el siguiente número de versión semántica, genera un registro de cambios y publica la versión.
 
 De forma predeterminada, la liberación semántica utiliza 
@@ -27,6 +27,6 @@ dentro de la documentación de angular sobre convenciones de mensajes se tienen 
 - refactor: un cambio de código que no corrige un error ni agrega una característica.
 - test: agregar pruebas faltantes o corregir pruebas existentes.
 
-### excluir commit del análisis del plugin:
+## excluir commit del análisis del plugin:
 
 Todas las confirmaciones que contengan [skip release] or [release skip] en su mensaje se excluirán del análisis de confirmación y no participarán en la determinación del tipo de versión.
