@@ -43,10 +43,10 @@ jobs:
         otp-version: ${{ env.OTP_VERSION }}
     
     - name: setup semantic-release
-      run: npm install -g semantic-release @semantic-release/changelog @semantic-release/github -D
+      run: npm install -g semantic-release @semantic-release/commit-analyzer @semantic-release/changelog @semantic-release/github -D
     
     - name: release
-      run: npx -p @semantic-release/changelog semantic-release
+      run: npx -p @semantic-release/commit-analyzer -p @semantic-release/changelog semantic-release
       
     - name: Validate conditions
       if: ${{ env.DEBUG_MODE == 'true' }}
