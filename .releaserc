@@ -7,8 +7,9 @@
         "preset": "conventionalcommits",
         "releaseRules": [
           { "type": "*!", "release": "major"},
-          { "type": "BREAKING CHANGE*", "release": "major" },
-          { "type": "breaking change*", "release": "major" },
+          { "type": "BREAKING", "release": "major" },
+          { "type": "breaking", "release": "major" },
+          { "type": "Breaking", "release": "major" },
           { "type": "hotfix", "release": "patch" },
           { "type": "docs", "release": "patch" },
           { "type": "refactor", "release": "patch" },
@@ -23,8 +24,9 @@
       "@semantic-release/release-notes-generator", {
         presetConfig: {
           types: [
-            { type: "BREAKING CHANGE", "section": "Major version release" },
-            { type: "breaking change", "section": "Major version release" },
+            { type: "BREAKING", "section": "Major version release" },
+            { type: "breaking", "section": "Major version release" },
+            { type: "Breaking", "section": "Major version release" },
             { type: "feat", "section": "Features" },
             { type: "fix", "section": "Bug Fixes" },
             { type: "hotfix", "section": "Bug Fixes" },
