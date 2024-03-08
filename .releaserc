@@ -19,7 +19,28 @@
         ]
       }
     ],
-    "@semantic-release/release-notes-generator",
+    [
+        "@semantic-release/release-notes-generator",
+        {
+          presetConfig: {
+            types: [
+              { "type": "BREAKING CHANGE", "section": "Major version release" },
+              { "type": "breaking change", "section": "Major version release" },
+              { type: "feat", section: "Features" },
+              { type: "fix", section: "Bug Fixes" },
+              { type: "hotfix", section: "Bug Fixes" },
+              { type: "docs", section: "Docs" },
+              { type: "refactor", section: "Refactoring" },
+              { type: "perf", section: "Performance Improvements" },
+              { type: "ci", section: "CI/CD Changes" },
+              { type: "test", section: "Tests" },
+            ],
+          },
+          writerOpts: {
+            commitsSort: ["subject", "scope"],
+          },
+        },
+      ],
     "@semantic-release/github"
   ]
 }
