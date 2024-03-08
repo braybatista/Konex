@@ -9,7 +9,7 @@ Se pueden utilizar herramientas como commitizen o commit-lint para ayudar a los 
 
 La siguiente tabla muestra qué mensaje de confirmación le proporciona qué tipo de versión cuando se ejecuta la versión semántica (usando la configuración predeterminada):
 
-**formato version:** v<<major>>.<<minor>>.<<patch>>
+**formato version:** `v<<major>>.<<minor>>.<<patch>>`
 
 | Commit Message                                                                                                        | Release type                  |
 | --------------------------------------------------------------------------------------------------------------------- | ------------------------------|
