@@ -35,7 +35,7 @@
           ],
         },
         writerOpts: {
-          commitsSort: ["subject", "scope"],
+          commitsSort: ["subject", "scope"]
         }
       }
     ],
