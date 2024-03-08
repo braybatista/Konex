@@ -2,14 +2,19 @@
   "repositoryUrl": "https://github.com/braybatista/Konex.git",
   "branches": ["master", "main"],
   "plugins": [
-    "@semantic-release/commit-analyzer",
-    "@semantic-release/release-notes-generator",
-    "@semantic-release/github",
     [
-      "@semantic-release/changelog",
+      "@semantic-release/commit-analyzer",
       {
-        "changelogFile": "docs/CHANGELOG.md"
+        "preset": "conventionalcommits",
+        "releaseRules": [
+          {
+            "type": "*!",
+            "release": "major"
+          }
+        ]
       }
-    ]
+    ],
+    "@semantic-release/release-notes-generator",
+    "@semantic-release/github"
   ]
 }
