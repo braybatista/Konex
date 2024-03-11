@@ -16,6 +16,8 @@ La siguiente tabla muestra qué mensaje de confirmación le proporciona qué tip
 | `fix: `                                                                                                               | ~~Patch~~ Fix Release         |
 | `feat: `                                                                                                              | ~~Minor~~ Feature Release     |
 | `breaking:`                                                                                                           | ~~Major~~ Breaking Release    |
+
+
 **[link a la fuente.](https://github.com/semantic-release/semantic-release?tab=readme-ov-file#Commit%20message%20format)**
 
 dentro de la documentación de angular sobre convenciones de mensajes se tienen estos adicionales:
