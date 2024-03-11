@@ -25,7 +25,25 @@
     [
       "@semantic-release/release-notes-generator",
       {
-        "preset": "eslint"
+        "preset": "eslint",
+        "presetConfig": {
+          types: [
+            { "tag": "breaking", "section": "Major version release" },
+            { "tag": "feat", "section": "Features" },
+            { "tag": "fix", "section": "testing message section" },
+            { "tag": "hotfix", "section": "Bug Fixes" },
+            { "tag": "update", "section": "Updates" },
+            { "tag": "upgrate", "section": "Upgrates" },
+            { "tag": "breaking", "section": "Major version release" },
+            { "tag": "docs", "section": "Documentation" },
+            { "tag": "chore", "section": "Chores" },
+            { "tag": "build", "section": "CI/CD Changes" },
+            { "tag": "ci", "section": "CI/CD Changes" },
+            { "tag": "test", "section": "Tests" },
+            { "tag": "refactor", "section": "Refactoring" },
+            { "tag": "perf", "section": "Performance Improvements" }
+          ],
+        }
       }
     ],
     "@semantic-release/github"
