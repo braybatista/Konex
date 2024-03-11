@@ -36,18 +36,21 @@
         "preset": "conventionalcommits",
         presetConfig: {
           types: [
-            { type: "BREAKING", "section": "Major version release" },
-            { type: "breaking", "section": "Major version release" },
-            { type: "Breaking", "section": "Major version release" },
-            { type: "feat", "section": "Features" },
-            { type: "fix", "section": "testing message section" },
-            { type: "hotfix", "section": "Bug Fixes" },
-            { type: "docs", "section": "Docs" },
-            { type: "refactor", "section": "Refactoring" },
-            { type: "perf", "section": "Performance Improvements" },
-            { type: "build", "section": "CI/CD Changes" },
-            { type: "test", "section": "Tests" }
-          ],
+              { type: "breaking", "section": "Major version release", "hidden": false },
+              { type: "BREAKING", "section": "Major version release", "hidden": false },
+              { type: "feat", "section": "Features", "hidden": false },
+              { type: "fix", "section": "testing message section", "hidden": false },
+              { type: "hotfix", "section": "Bug Fixes", "hidden": false },
+              { type: "update", "section": "Updates", "hidden": false },
+              { type: "upgrate", "section": "Upgrates", "hidden": false },
+              { type: "docs", "section": "Documentation", "hidden": false },
+              { type: "chore", "section": "Chores", "hidden": false },
+              { type: "build", "section": "CI/CD Changes", "hidden": false },
+              { type: "ci", "section": "CI/CD Changes", "hidden": false },
+              { type: "test", "section": "Tests", "hidden": false },
+              { type: "refactor", "section": "Refactoring", "hidden": false },
+              { type: "perf", "section": "Performance Improvements", "hidden": false }
+          ]
         },
         writerOpts: {
           commitsSort: ["subject", "scope"]
