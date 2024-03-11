@@ -21,14 +21,14 @@
           { "tag": "perf", "release": "patch" }
         ],
         "parserOpts": {
-        "noteKeywords": [
-          "BREAKING CHANGE",
-          "BREAKING CHANGES",
-          "breaking",
-          "Breaking",
-          "BREAKING"
-        ]
-      }
+          "noteKeywords": [
+            "BREAKING CHANGE",
+            "BREAKING CHANGES",
+            "breaking",
+            "Breaking",
+            "BREAKING"
+          ]
+        }
       }
     ],
     [
