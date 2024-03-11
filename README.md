@@ -15,22 +15,22 @@ La siguiente tabla muestra qué mensaje de confirmación le proporciona qué tip
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------- |
 | `fix: stop graphite breaking when too much pressure applied`                                                                                                                                     | ~~Patch~~ Fix Release                                                                                           |
 | `feat: add 'graphiteWidth' option`                                                                                                                                                               | ~~Minor~~ Feature Release                                                                                       |
-| `perf: remove graphiteWidth option`<br><br>`BREAKING CHANGE: The graphiteWidth option has been removed.`<br>`The default graphite width of 10mm is always used for performance reasons.`         | ~~Major~~ Breaking Release <br /> (Note that the `BREAKING CHANGE: ` token must be in the footer of the commit) |
 | `breaking: add 'graphiteWidth' option`                                                                                                                                                           | ~~Major~~ Feature Release                                                                                       |
+| `perf: remove graphiteWidth option`<br><br>`BREAKING CHANGE: The graphiteWidth option has been removed.`<br>`The default graphite width of 10mm is always used for performance reasons.`         | ~~Major~~ Breaking Release <br /> (Note that the `BREAKING CHANGE: ` token must be in the footer of the commit) |
 
 
 **[link a la fuente.](https://github.com/semantic-release/semantic-release?tab=readme-ov-file#Commit%20message%20format)**
 
 dentro de la documentación de angular sobre convenciones de mensajes se tienen estos adicionales:
 
-**breaking:** Aumento de major version debido a cambio significante. `v1.0.0 --> v2.0.0`__
-**update:** Aumento de minor version debido a cambio moderado. `v1.0.0 --> v1.1.0`__
-**upgrade:** Aumento de minor version debido a cambio moderado. `v1.0.0 --> v1.1.0`__
-**refactor:** Aumento de minor version debido a refactorización de código. `v1.0.0 --> v1.1.0`__
-**chore:** Aumento de minor version debido a conjunto de cambios moderados. `v1.0.0 --> v1.1.0`__
-**docs:** Aumento de minor version debido a La documentación. `v1.0.0 --> v1.0.1`__
-**ci:** Aumento de patch version debido a cambios en CI. `v1.0.0 --> v1.0.1`__
-**test:** Aumento de patch version debido a agregar pruebas faltantes o corregir pruebas existentes. `v1.0.0 --> v1.0.1`__
+**breaking:** Aumento de major version debido a cambio significante. `v1.0.0 --> v2.0.0`<br>
+**update:** Aumento de minor version debido a cambio moderado. `v1.0.0 --> v1.1.0`<br>
+**upgrade:** Aumento de minor version debido a cambio moderado. `v1.0.0 --> v1.1.0`<br>
+**refactor:** Aumento de minor version debido a refactorización de código. `v1.0.0 --> v1.1.0`<br>
+**chore:** Aumento de minor version debido a conjunto de cambios moderados. `v1.0.0 --> v1.1.0`<br>
+**docs:** Aumento de minor version debido a La documentación. `v1.0.0 --> v1.0.1`<br>
+**ci:** Aumento de patch version debido a cambios en CI. `v1.0.0 --> v1.0.1`<br>
+**test:** Aumento de patch version debido a agregar pruebas faltantes o corregir pruebas existentes. `v1.0.0 --> v1.0.1`<br>
 **perf:** Aumento de patch version debido a Un cambio de código que mejora el rendimiento. `v1.0.0 --> v1.0.1`
 
 ## Excluir commit del análisis del plugin:
