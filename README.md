@@ -22,22 +22,14 @@ La siguiente tabla muestra qué mensaje de confirmación le proporciona qué tip
 
 dentro de la documentación de angular sobre convenciones de mensajes se tienen estos adicionales:
 
-**breaking:** Aumento de major version debido a cambio significante. `v1.0.0 --> v2.0.0`
-
-**update:** Aumento de minor version debido a cambio moderado. `v1.0.0 --> v1.1.0`
-
-**upgrade:** Aumento de minor version debido a cambio moderado. `v1.0.0 --> v1.1.0`
-
-**refactor:** Aumento de minor version debido a refactorización de código. `v1.0.0 --> v1.1.0`
-
-**chore:** Aumento de minor version debido a conjunto de cambios moderados. `v1.0.0 --> v1.1.0`
-
-**docs:** Aumento de minor version debido a La documentación. `v1.0.0 --> v1.0.1`
-
-**ci:** Aumento de patch version debido a cambios en CI. `v1.0.0 --> v1.0.1`
-
-**test:** Aumento de patch version debido a agregar pruebas faltantes o corregir pruebas existentes. `v1.0.0 --> v1.0.1`
-
+**breaking:** Aumento de major version debido a cambio significante. `v1.0.0 --> v2.0.0`__
+**update:** Aumento de minor version debido a cambio moderado. `v1.0.0 --> v1.1.0`__
+**upgrade:** Aumento de minor version debido a cambio moderado. `v1.0.0 --> v1.1.0`__
+**refactor:** Aumento de minor version debido a refactorización de código. `v1.0.0 --> v1.1.0`__
+**chore:** Aumento de minor version debido a conjunto de cambios moderados. `v1.0.0 --> v1.1.0`__
+**docs:** Aumento de minor version debido a La documentación. `v1.0.0 --> v1.0.1`__
+**ci:** Aumento de patch version debido a cambios en CI. `v1.0.0 --> v1.0.1`__
+**test:** Aumento de patch version debido a agregar pruebas faltantes o corregir pruebas existentes. `v1.0.0 --> v1.0.1`__
 **perf:** Aumento de patch version debido a Un cambio de código que mejora el rendimiento. `v1.0.0 --> v1.0.1`
 
 ## Excluir commit del análisis del plugin:
@@ -47,17 +39,17 @@ Todas las confirmaciones que contengan [skip release] or [release skip] en su me
 ## Ejemplos
 
 ### major version example
-commit message
+**commit message**
 `fix: some message`
 
 `BREAKING CHANGE: It will be significant" # passes`
 
 ### minor version example
-commit message
+**commit message**
 `feat: some message` ó `refactor: some message` ó `update: some message`
 
 ### patch version example
-commit message
+**commit message**
 `fix: some message` ó `ci: some message` ó `test: some message`
 
 **[link a mas ejemplos.](https://github.com/conventional-changelog/commitlint/tree/master/@commitlint/config-conventional#type-enum)**
