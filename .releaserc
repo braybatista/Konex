@@ -18,8 +18,17 @@
           { "tag": "ci", "release": "patch" },
           { "tag": "refactor", "release": "minor" },
           { "tag": "test", "release": "patch" },
-          { "tag": "perf", "release": "minor" }
+          { "tag": "perf", "release": "patch" }
+        ],
+        "parserOpts": {
+        "noteKeywords": [
+          "BREAKING CHANGE",
+          "BREAKING CHANGES",
+          "breaking",
+          "Breaking",
+          "BREAKING"
         ]
+      }
       }
     ],
     [
@@ -29,7 +38,7 @@
         "presetConfig": {
           "types": [
             { "tag": "breaking", "section": "Major version release", "hidden": false },
-            { "tag": "BREAKING", "section": "Major version release", "hidden": false },
+            { "tag": "BREAKING", "section": "Major version release", "hidden": true },
             { "tag": "feat", "section": "Features", "hidden": false },
             { "tag": "fix", "section": "testing message section", "hidden": false },
             { "tag": "hotfix", "section": "Bug Fixes", "hidden": false },
