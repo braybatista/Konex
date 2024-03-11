@@ -28,6 +28,7 @@
         "presetConfig": {
           "types": [
               { "type": "breaking", "section": "Major version release", "hidden": false },
+              { "type": "Breaking", "section": "Major version release", "hidden": false },
               { "type": "BREAKING", "section": "Major version release", "hidden": false },
               { "type": "BREAKING CHANGE", "section": "Major version release", "hidden": false },
               { "type": "BREAKING CHANGES", "section": "Major version release", "hidden": false },
