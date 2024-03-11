@@ -3,51 +3,37 @@
   "branches": ["master", "main"],
   "plugins": [
     [
-      "@semantic-release/commit-analyzer", {
-        "preset": "conventionalcommits",
+      "@semantic-release/commit-analyzer",
+      {
+        "preset": "eslint",
         "releaseRules": [
-          { "type": "*!", "release": "major"},
-          { "type": "BREAKING", "release": "major" },
-          { "type": "breaking", "release": "major" },
-          { "type": "Breaking", "release": "major" },
-          { "type": "hotfix", "release": "patch" },
-          { "type": "docs", "release": "patch" },
-          { "type": "refactor", "release": "patch" },
-          { "type": "perf", "release": "patch" },
-          { "type": "build", "release": "patch" },
-          { "type": "chore", "release": "patch" },
-          { "type": "test", "release": "patch" }
+          { "tag": "fix", "release": "patch" },
+          { "tag": "feat", "release": "minor" },
+          { "tag": "update", "release": "minor" },
+          { "tag": "upgrate", "release": "minor" },
+          { "tag": "breaking", "release": "major" },
+          { "tag": "docs", "release": "patch" },
+          { "tag": "chore", "release": "minor" },
+          { "tag": "build", "release": "patch" },
+          { "tag": "ci", "release": "patch" },
+          { "tag": "refactor", "release": "minor" },
+          { "tag": "test", "release": "patch" },
+          { "tag": "perf", "release": "minor" }
         ]
       }
     ],
     [
-      "@semantic-release/release-notes-generator", {
-        presetConfig: {
-          types: [
-            { type: "BREAKING", "section": "Major version release" },
-            { type: "breaking", "section": "Major version release" },
-            { type: "Breaking", "section": "Major version release" },
-            { type: "feat", "section": "Features" },
-            { type: "fix", "section": "testing message section" },
-            { type: "hotfix", "section": "Bug Fixes" },
-            { type: "docs", "section": "Docs" },
-            { type: "refactor", "section": "Refactoring" },
-            { type: "perf", "section": "Performance Improvements" },
-            { type: "build", "section": "CI/CD Changes" },
-            { type: "test", "section": "Tests" }
-          ],
-        },
-        writerOpts: {
-          commitsSort: ["subject", "scope"]
-        }
+      "@semantic-release/release-notes-generator",
+      {
+        "preset": "eslint"
       }
     ],
-    "@semantic-release/github",
-    [
-      "@semantic-release/changelog",
-      {
-        "changelogFile": "docs/CHANGELOG.md"
-      }
-    ]
+    "@semantic-release/github"
+  ],
+  [
+    "@semantic-release/changelog",
+    {
+      "changelogFile": "docs/CHANGELOG.md"
+    }
   ]
 }
