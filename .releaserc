@@ -25,19 +25,12 @@
     [
       "@semantic-release/release-notes-generator", {
         "preset": "conventionalcommits",
-        "parserOpts": {
-          "noteKeywords": [
-            "BREAKING CHANGE",
-            "BREAKING CHANGES",
-            "breaking",
-            "Breaking",
-            "BREAKING"
-          ]
-        },
         "presetConfig": {
           "types": [
-              { "type": "breaking", "section": "Major version release", "hidden": true },
-              { "type": "BREAKING", "section": "Major version release", "hidden": true },
+              { "type": "breaking", "section": "Major version release", "hidden": false },
+              { "type": "BREAKING", "section": "Major version release", "hidden": false },
+              { "type": "BREAKING CHANGE", "section": "Major version release", "hidden": false },
+              { "type": "BREAKING CHANGES", "section": "Major version release", "hidden": false },
               { "type": "feat", "section": "Features", "hidden": false },
               { "type": "fix", "section": "Bug Fixes", "hidden": false },
               { "type": "hotfix", "section": "Bug Fixes", "hidden": false },
