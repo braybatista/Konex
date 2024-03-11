@@ -11,26 +11,45 @@ La siguiente tabla muestra qué mensaje de confirmación le proporciona qué tip
 
 **formato version:** `v<<major>>.<<minor>>.<<patch>>`
 
-| Commit Message                                                                                                        | Release type                  |
-| --------------------------------------------------------------------------------------------------------------------- | ------------------------------|
-| `fix: `                                                                                                               | ~~Patch~~ Fix Release         |
-| `feat: `                                                                                                              | ~~Minor~~ Feature Release     |
-| `breaking:`                                                                                                           | ~~Major~~ Breaking Release    |
+| Commit Message                                                                                                                                                                                   | Release type                                                                                                    |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------- |
+| `fix: stop graphite breaking when too much pressure applied`                                                                                                                             | ~~Patch~~ Fix Release                                                                                           |
+| `feat: add 'graphiteWidth' option`                                                                                                                                                       | ~~Minor~~ Feature Release                                                                                       |
+| `perf: remove graphiteWidth option`<br><br>`BREAKING CHANGE: The graphiteWidth option has been removed.`<br>`The default graphite width of 10mm is always used for performance reasons.` | ~~Major~~ Breaking Release <br /> (Note that the `BREAKING CHANGE: ` token must be in the footer of the commit) |
 
 
 **[link a la fuente.](https://github.com/semantic-release/semantic-release?tab=readme-ov-file#Commit%20message%20format)**
 
 dentro de la documentación de angular sobre convenciones de mensajes se tienen estos adicionales:
 
-- **build:** cambios que afectan el sistema de compilación o las dependencias externas (alcances de ejemplo: gulp, broccoli, npm).
-- **ci:** Cambios en nuestros archivos y scripts de configuración de CI (ejemplos: CircleCi, SauceLabs).
-- **docs:** La documentación solo cambia.
-- **feat:** una nueva característica.
-- **fix:** una corrección de errores.
-- **perf:** Un cambio de código que mejora el rendimiento.
-- **refactor:** un cambio de código que no corrige un error ni agrega una característica.
-- **test:** agregar pruebas faltantes o corregir pruebas existentes.
+**breaking:** Aumento de major version debido a cambio significante. `v1.0.0 --> v2.0.0`
+**update:** Aumento de minor version debido a cambio moderado. `v1.0.0 --> v1.1.0`
+**upgrade:** Aumento de minor version debido a cambio moderado. `v1.0.0 --> v1.1.0`
+**refactor:** Aumento de minor version debido a refactorización de código. `v1.0.0 --> v1.1.0`
+**chore:** Aumento de minor version debido a conjunto de cambios moderados. `v1.0.0 --> v1.1.0`
+**docs:** Aumento de minor version debido a La documentación. `v1.0.0 --> v1.0.1`
+**ci:** Aumento de patch version debido a cambios en CI. `v1.0.0 --> v1.0.1`
+**test:** Aumento de patch version debido a agregar pruebas faltantes o corregir pruebas existentes. `v1.0.0 --> v1.0.1`
+**perf:** Aumento de patch version debido a Un cambio de código que mejora el rendimiento. `v1.0.0 --> v1.0.1`
 
-## excluir commit del análisis del plugin:
+## Excluir commit del análisis del plugin:
 
 Todas las confirmaciones que contengan [skip release] or [release skip] en su mensaje se excluirán del análisis de confirmación y no participarán en la determinación del tipo de versión.
+
+## Ejemplos
+
+## major version example
+commit message
+`fix: some message`
+
+`BREAKING CHANGE: It will be significant" # passes`
+
+## minor version example
+commit message
+`feat: some message` ó `refactor: some message` ó `update: some message`
+
+## patch version example
+commit message
+`fix: some message` ó `ci: some message` ó `test: some message`
+
+**[link a ejemplos.](https://github.com/conventional-changelog/commitlint/tree/master/@commitlint/config-conventional#type-enum) 
