@@ -43,10 +43,10 @@ jobs:
         otp-version: ${{ env.OTP_VERSION }}
     
     - name: setup semantic-release
-      run: npm install -g semantic-release @semantic-release/release-notes-generator @semantic-release/commit-analyzer @semantic-release/changelog @semantic-release/github conventional-changelog-conventionalcommits conventional-changelog-angular -D
+      run: npm install -g semantic-release @semantic-release/release-notes-generator @semantic-release/commit-analyzer @semantic-release/changelog @semantic-release/github conventional-changelog-eslint conventional-changelog-conventionalcommits conventional-changelog-angular -D
     
     - name: release
-      run: npx -p conventional-changelog-conventionalcommits -p @semantic-release/release-notes-generator -p @semantic-release/commit-analyzer -p @semantic-release/changelog semantic-release
+      run: npx -p conventional-changelog-eslint -p conventional-changelog-conventionalcommits -p @semantic-release/release-notes-generator -p @semantic-release/commit-analyzer -p @semantic-release/changelog semantic-release
       
     - name: Validate conditions
       if: ${{ env.DEBUG_MODE == 'true' }}
