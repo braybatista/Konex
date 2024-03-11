@@ -29,6 +29,7 @@
         "presetConfig": {
           "types": [
             { "tag": "breaking", "section": "Major version release", "hidden": false },
+            { "tag": "BREAKING", "section": "Major version release", "hidden": false },
             { "tag": "feat", "section": "Features", "hidden": false },
             { "tag": "fix", "section": "testing message section", "hidden": false },
             { "tag": "hotfix", "section": "Bug Fixes", "hidden": false },
@@ -46,11 +47,5 @@
       }
     ],
     "@semantic-release/github"
-  ],
-  [
-    "@semantic-release/changelog",
-    {
-      "changelogFile": "docs/CHANGELOG.md"
-    }
   ]
 }
