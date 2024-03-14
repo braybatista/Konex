@@ -1,0 +1,78 @@
+{
+    "gitCommitLintVscode.customType": [
+        {
+            "emoji": "",
+            "type": "breaking",
+            "name": "up major version",
+            "description": "`v1.0.0 --> v2.0.0`"
+        },
+        {
+            "emoji": "",
+            "type": "feat",
+            "name": "new feature",
+            "description": "v1.0.0 --> v1.1.0"
+        },
+        {
+            "emoji": "",
+            "type": "refactor",
+            "name": "refactoring features",
+            "description": "v1.0.0 --> v1.1.0"
+        },
+        {
+            "emoji": "",
+            "type": "update",
+            "name": "update changes",
+            "description": "v1.0.0 --> v1.1.0"
+        },
+        {
+            "emoji": "",
+            "type": "upgrade",
+            "name": "upgrade changes",
+            "description": "v1.0.0 --> v1.1.0"
+        },
+        {
+            "emoji": "",
+            "type": "chore",
+            "name": "significant changes usually many bugs and refactoring",
+            "description": "v1.0.0 --> v1.1.0"
+        },
+        {
+            "emoji": "",
+            "type": "fix",
+            "name": "bug",
+            "description": "v1.0.0 --> v1.0.1"
+        },
+        {
+            "emoji": "",
+            "type": "docs",
+            "name": "documentation changes",
+            "description": "v1.0.0 --> v1.0.1"
+        },
+        
+        {
+            "emoji": "",
+            "type": "build",
+            "name": "build changes",
+            "description": "v1.0.0 --> v1.0.1"
+        },
+        {
+            "emoji": "",
+            "type": "ci",
+            "name": "CI/CD changes",
+            "description": "v1.0.0 --> v1.0.1"
+        },
+        {
+            "emoji": "",
+            "type": "test",
+            "name": "tests changes",
+            "description": "v1.0.0 --> v1.0.1"
+        },
+        
+        {
+            "emoji": "",
+            "type": "perf",
+            "name": "performance changes",
+            "description": "v1.0.0 --> v1.0.1"
+        }
+    ]
+}
