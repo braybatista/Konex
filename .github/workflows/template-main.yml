@@ -19,18 +19,6 @@ env:
 
 jobs:
   release:
-    - name: Validate variables
-      if: ${{ env.DEBUG_MODE == 'true' }}
-      run: |
-        echo "RELEASE_VERSION=${{ env.RELEASE_VERSION }}"
-
-    - name: Validate commit message
-      if: ${{ env.DEBUG_MODE == 'true' }}
-      run: |
-        echo "message1: ${{ github.event.head_commit.message }}"
-        echo "message2: ${{ github.event.workflow_run.head_commit.message }}"
-        echo "message3: ${{ github.event.commits[0].message }}"
-
     environment: ${{env.ACTIONS_ENV}}
     runs-on: ubuntu-latest
 
@@ -42,6 +30,11 @@ jobs:
       PUBLISH_ARTIFACT: ${{ vars.PUBLISH_ARTIFACT }}
       DEBUG_MODE: ${{ vars.DEBUG_MODE }}
       COMMIT_PUSH: ${{ vars.COMMIT_PUSH }}
+
+    - name: Validate variables
+      if: ${{ env.DEBUG_MODE == 'true' }}
+      run: |
+        echo "RELEASE_VERSION=${{ env.RELEASE_VERSION }}"
 
     - name: Validate commit message
       if: ${{ env.DEBUG_MODE == 'true' }}
