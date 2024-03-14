@@ -33,81 +33,82 @@ jobs:
       if: ${{ env.DEBUG_MODE == 'true' }}
       run: |
         echo "COMMIT_LAST_MESSAGE: ${{ github.event.head_commit.message }}"
+        echo "${{ contains(github.event.head_commit.message, [ [skip ci], [ci skip], [skip actions], [skip release], [actions skip] ]) }}""
         echo "SKIP_RELEASE: ${{ env.SKIP_RELEASE }}"
 
-    - name: Setup Node.js
-      if: ${{ env.SKIP_RELEASE == 'false' }}
-      uses: actions/setup-node@v4
-      with:
-        node-version: 20.x
+    # - name: Setup Node.js
+    #   if: ${{ env.SKIP_RELEASE == 'false' }}
+    #   uses: actions/setup-node@v4
+    #   with:
+    #     node-version: 20.x
     
-    - name: Set up Elixir 1.14.3 and Otp 25
-      if: ${{ env.SKIP_RELEASE == 'false' }}
-      uses: erlef/setup-beam@v1
-      with:
-        elixir-version: '1.14.3'
-        otp-version: '25'
+    # - name: Set up Elixir 1.14.3 and Otp 25
+    #   if: ${{ env.SKIP_RELEASE == 'false' }}
+    #   uses: erlef/setup-beam@v1
+    #   with:
+    #     elixir-version: '1.14.3'
+    #     otp-version: '25'
     
-    - name: setup semantic-release
-      if: ${{ env.SKIP_RELEASE == 'false' }}
-      run: npm install -g semantic-release @semantic-release/changelog @semantic-release/github conventional-changelog-eslint conventional-changelog-conventionalcommits conventional-changelog-angular -D
+    # - name: setup semantic-release
+    #   if: ${{ env.SKIP_RELEASE == 'false' }}
+    #   run: npm install -g semantic-release @semantic-release/changelog @semantic-release/github conventional-changelog-eslint conventional-changelog-conventionalcommits conventional-changelog-angular -D
     
-    - name: release
-      if: ${{ env.SKIP_RELEASE == 'false' }}
-      run: npx -p conventional-changelog-eslint -p conventional-changelog-conventionalcommits -p @semantic-release/changelog semantic-release
+    # - name: release
+    #   if: ${{ env.SKIP_RELEASE == 'false' }}
+    #   run: npx -p conventional-changelog-eslint -p conventional-changelog-conventionalcommits -p @semantic-release/changelog semantic-release
       
-    - name: Validate variables
-      if: ${{ env.SKIP_RELEASE == 'false' && env.DEBUG_MODE == 'true' }}
-      run: |
-        echo "RELEASE_VERSION=${{ env.RELEASE_VERSION }}"
-        echo "CONDITION RELEASE_VERSION != '';=${{ env.RELEASE_VERSION != '' }}"
-        echo "CONDITION PUBLISH_ARTIFACT == '';=${{ env.RELEASE_VERSION == '' }}"
-        echo "CONDITION PUBLISH_ARTIFACT == TRUE;=${{ env.PUBLISH_ARTIFACT == 'true' }}"
-        echo "CONDITION PUBLISH_ARTIFACT == FALSE;=${{ env.PUBLISH_ARTIFACT == 'false' }}"
-        echo "GITHUB_API_URL=${{ env.GITHUB_API_URL }}"
-        echo "PUBLISH_ARTIFACT=${{ env.PUBLISH_ARTIFACT }}"
-        echo "COMMIT_PUSH=${{ env.COMMIT_PUSH }}"
-        echo "DEBUG_MODE=${{ env.DEBUG_MODE }}"
+    # - name: Validate variables
+    #   if: ${{ env.SKIP_RELEASE == 'false' && env.DEBUG_MODE == 'true' }}
+    #   run: |
+    #     echo "RELEASE_VERSION=${{ env.RELEASE_VERSION }}"
+    #     echo "CONDITION RELEASE_VERSION != '';=${{ env.RELEASE_VERSION != '' }}"
+    #     echo "CONDITION PUBLISH_ARTIFACT == '';=${{ env.RELEASE_VERSION == '' }}"
+    #     echo "CONDITION PUBLISH_ARTIFACT == TRUE;=${{ env.PUBLISH_ARTIFACT == 'true' }}"
+    #     echo "CONDITION PUBLISH_ARTIFACT == FALSE;=${{ env.PUBLISH_ARTIFACT == 'false' }}"
+    #     echo "GITHUB_API_URL=${{ env.GITHUB_API_URL }}"
+    #     echo "PUBLISH_ARTIFACT=${{ env.PUBLISH_ARTIFACT }}"
+    #     echo "COMMIT_PUSH=${{ env.COMMIT_PUSH }}"
+    #     echo "DEBUG_MODE=${{ env.DEBUG_MODE }}"
 
-    - name: Set variables From git tag command
-      if: ${{ env.SKIP_RELEASE == 'false' && env.PUBLISH_ARTIFACT == 'true' }}
-      run: |
-        echo "$VER"
-        echo "RELEASE_VERSION=$(git tag | sort --version-sort | tail -n1 | tr -d 'v')" >> $GITHUB_ENV
+    # - name: Set variables From git tag command
+    #   if: ${{ env.SKIP_RELEASE == 'false' && env.PUBLISH_ARTIFACT == 'true' }}
+    #   run: |
+    #     echo "$VER"
+    #     echo "RELEASE_VERSION=$(git tag | sort --version-sort | tail -n1 | tr -d 'v')" >> $GITHUB_ENV
 
-    - name: Install Mix dependencies
-      if: ${{ env.SKIP_RELEASE == 'false' && env.PUBLISH_ARTIFACT == 'true' }}
-      run: mix deps.get && mix deps.compile
-      working-directory: Elixir/Konex
+    # - name: Install Mix dependencies
+    #   if: ${{ env.SKIP_RELEASE == 'false' && env.PUBLISH_ARTIFACT == 'true' }}
+    #   run: mix deps.get && mix deps.compile
+    #   working-directory: Elixir/Konex
     
-    - name: Run Mix tests
-      if: ${{ env.SKIP_RELEASE == 'false' &&  env.PUBLISH_ARTIFACT == 'true' }}
-      run: mix test
-      working-directory: Elixir/Konex
+    # - name: Run Mix tests
+    #   if: ${{ env.SKIP_RELEASE == 'false' &&  env.PUBLISH_ARTIFACT == 'true' }}
+    #   run: mix test
+    #   working-directory: Elixir/Konex
 
-    - name: Upgrade mix.exs
-      if: ${{ env.SKIP_RELEASE == 'false' && env.COMMIT_PUSH == 'true' }}
-      run: sed -i 's/@version \".*\"/@version "${{ env.RELEASE_VERSION  }}"/g' mix.exs
-      working-directory: Elixir/Konex
+    # - name: Upgrade mix.exs
+    #   if: ${{ env.SKIP_RELEASE == 'false' && env.COMMIT_PUSH == 'true' }}
+    #   run: sed -i 's/@version \".*\"/@version "${{ env.RELEASE_VERSION  }}"/g' mix.exs
+    #   working-directory: Elixir/Konex
 
-    # testing, working but we need to prevent next run.
-    # adding [skip ci] to commit comment we can skip the new CI run onf the workflow
-    # not working on multiple commits from pull request
-    - name: Commit And Push version
-      if: ${{ env.SKIP_RELEASE == 'false' && env.COMMIT_PUSH == 'true' }}
-      uses: github-actions-x/commit@v2.9
-      with:
-        github-token: ${{ env.GITHUB_TOKEN }}
-        push-branch: main
-        commit-message: '[skip release] [skip ci] Upgrade version to ${{ env.RELEASE_VERSION }}'
-        force-add: "true"
-        files: Elixir/Konex/mix.exs docs/CHANGELOG.md
-        name: Release Bot
-        email: bbatist@bancolombia.com.co
+    # # testing, working but we need to prevent next run.
+    # # adding [skip ci] to commit comment we can skip the new CI run onf the workflow
+    # # not working on multiple commits from pull request
+    # - name: Commit And Push version
+    #   if: ${{ env.SKIP_RELEASE == 'false' && env.COMMIT_PUSH == 'true' }}
+    #   uses: github-actions-x/commit@v2.9
+    #   with:
+    #     github-token: ${{ env.GITHUB_TOKEN }}
+    #     push-branch: main
+    #     commit-message: '[skip release] [skip ci] Upgrade version to ${{ env.RELEASE_VERSION }}'
+    #     force-add: "true"
+    #     files: Elixir/Konex/mix.exs docs/CHANGELOG.md
+    #     name: Release Bot
+    #     email: bbatist@bancolombia.com.co
 
-    - name: Publish to HEX
-      if: ${{ env.SKIP_RELEASE == 'false' && env.PUBLISH_ARTIFACT == 'true' }}
-      run: mix hex.publish --replace --yes
-      working-directory: Elixir/Konex
-      env:
-        HEX_API_KEY: ${{ secrets.HEX_API_KEY }}
+    # - name: Publish to HEX
+    #   if: ${{ env.SKIP_RELEASE == 'false' && env.PUBLISH_ARTIFACT == 'true' }}
+    #   run: mix hex.publish --replace --yes
+    #   working-directory: Elixir/Konex
+    #   env:
+    #     HEX_API_KEY: ${{ secrets.HEX_API_KEY }}
