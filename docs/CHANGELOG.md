@@ -1,3 +1,10 @@
+## [2.0.6](https://github.com/braybatista/Konex/compare/v2.0.5...v2.0.6) (2024-03-14)
+
+
+### Bug Fixes
+
+* running with multiple jobs 8 ([64bf38f](https://github.com/braybatista/Konex/commit/64bf38f818de6109c40219312d4f9a73c3ecf76d))
+
 ## [2.0.5](https://github.com/braybatista/Konex/compare/v2.0.4...v2.0.5) (2024-03-14)
 
 
