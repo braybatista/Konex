@@ -14,12 +14,9 @@ permissions:
   pull-requests: write
   id-token: write
 
-env:
-  ACTIONS_ENV: ${{ secrets.ACTIONS_ENV }}
-
 jobs:
   release:
-    environment: ${{env.ACTIONS_ENV}}
+    environment: ACTIONS_ENV
     runs-on: ubuntu-latest
 
     env:
