@@ -27,6 +27,7 @@ jobs:
       PUBLISH_ARTIFACT: ${{ vars.PUBLISH_ARTIFACT }}
       DEBUG_MODE: ${{ vars.DEBUG_MODE }}
       COMMIT_PUSH: ${{ vars.COMMIT_PUSH }}
+      SKIP_RELEASE: ${{ contains(github.event.head_commit.message, '[skip release]') }}
 
     steps:
     - uses: actions/checkout@v4
@@ -35,8 +36,7 @@ jobs:
       if: ${{ env.DEBUG_MODE == 'true' }}
       run: |
         echo "COMMIT_LAST_MESSAGE: ${{ github.event.head_commit.message }}"
-        echo "validation1: ${{ contains(github.event.head_commit.message, '[skip release]') }}"
-        echo "validation2: ${{ contains('[skip release]', github.event.head_commit.message) }}"
+        echo "validation: ${{ contains(github.event.head_commit.message, '[skip release]') }}"
 
     # - name: Setup Node.js
     #   uses: actions/setup-node@v4
