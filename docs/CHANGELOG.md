@@ -1,3 +1,10 @@
+## [2.0.2](https://github.com/braybatista/Konex/compare/v2.0.1...v2.0.2) (2024-03-14)
+
+
+### Bug Fixes
+
+* testing skip release env variable 3 [skip tests] ([b10aba8](https://github.com/braybatista/Konex/commit/b10aba89c0a5376a3c5225d033931dc0c7a66bcd))
+
 ## [2.0.0](https://github.com/braybatista/Konex/compare/v1.0.0...v2.0.0) (2024-03-14)
 
 
