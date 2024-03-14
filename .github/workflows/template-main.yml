@@ -51,14 +51,28 @@ jobs:
     environment: ACTIONS_ENV
     runs-on: ubuntu-latest
 
-    steps:
-    - uses: actions/checkout@v4
+    env:
+      GITHUB_TOKEN: ${{ secrets.GH_TOKEN_2 }}
+      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      HEX_API_KEY: ${{ secrets.HEX_API_KEY }}
+      GITHUB_API_URL: ${{ vars.GH_API_URL }}
+      PUBLISH_ARTIFACT: ${{ vars.PUBLISH_ARTIFACT }}
+      DEBUG_MODE: ${{ vars.DEBUG_MODE }}
+      COMMIT_PUSH: ${{ vars.COMMIT_PUSH }}
+      SKIP_GIT_HOOKS: 'true'
+      SKIP_RELEASE: ${{ contains(github.event.head_commit.message, '[skip release]') || contains(github.event.head_commit.message, '[skip ci]') || contains(github.event.head_commit.message, '[release skip]') || contains(github.event.head_commit.message, '[ci skip]') }}
 
+    outputs:
+      RELEASE_VERSION: ${{ steps.step3.outputs.RELEASE_VERSION }}
+
+    steps:
     - name: Generate Release
+      id: step1
       if: ${{ env.SKIP_RELEASE == 'false' }}
       run: npx -p conventional-changelog-eslint -p conventional-changelog-conventionalcommits -p @semantic-release/changelog semantic-release
       
     - name: Validate variables
+      id: step2
       if: ${{ env.SKIP_RELEASE == 'false' && env.DEBUG_MODE == 'true' }}
       run: |
         echo "RELEASE_VERSION=${{ env.RELEASE_VERSION }}"
@@ -74,22 +88,37 @@ jobs:
         echo "SKIP_RELEASE: ${{ env.SKIP_RELEASE }}"
 
     - name: Set variables From git tag command
+      id: step3
       if: ${{ env.SKIP_RELEASE == 'false' }}
       run: |
         echo "$VER"
         echo "RELEASE_VERSION=$(git tag | sort --version-sort | tail -n1 | tr -d 'v')" >> $GITHUB_ENV
+        echo "RELEASE_VERSION=$(git tag | sort --version-sort | tail -n1 | tr -d 'v')" >> $GITHUB_OUTPUT
 
   Commit_and_Push:
     needs: [Set_Up, Generate_Release]
     environment: ACTIONS_ENV
     runs-on: ubuntu-latest
 
-    steps:
-    - uses: actions/checkout@v4
+    env:
+      GITHUB_TOKEN: ${{ secrets.GH_TOKEN_2 }}
+      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      HEX_API_KEY: ${{ secrets.HEX_API_KEY }}
+      GITHUB_API_URL: ${{ vars.GH_API_URL }}
+      PUBLISH_ARTIFACT: ${{ vars.PUBLISH_ARTIFACT }}
+      DEBUG_MODE: ${{ vars.DEBUG_MODE }}
+      COMMIT_PUSH: ${{ vars.COMMIT_PUSH }}
+      SKIP_GIT_HOOKS: 'true'
+      SKIP_RELEASE: ${{ contains(github.event.head_commit.message, '[skip release]') || contains(github.event.head_commit.message, '[skip ci]') || contains(github.event.head_commit.message, '[release skip]') || contains(github.event.head_commit.message, '[ci skip]') }}
+      RELEASE_VERSION: ${{ needs.Generate_Release.outputs.RELEASE_VERSION }}
 
-    # testing, working but we need to prevent next run.
-    # adding [skip ci] to commit comment we can skip the new CI run onf the workflow
-    # not working on multiple commits from pull request
+    steps:
+    - name: Validate variables
+      id: step2
+      if: ${{ env.SKIP_RELEASE == 'false' && env.DEBUG_MODE == 'true' }}
+      run: |
+        echo "RELEASE_VERSION=${{ env.RELEASE_VERSION }}"
+    
     - name: Upgrade mix.exs
       if: ${{ env.SKIP_RELEASE == 'false' && env.COMMIT_PUSH == 'true' }}
       run: sed -i 's/@version \".*\"/@version "${{ env.RELEASE_VERSION  }}"/g' mix.exs
@@ -112,9 +141,18 @@ jobs:
     environment: ACTIONS_ENV
     runs-on: ubuntu-latest
 
-    steps:
-    - uses: actions/checkout@v4
+    env:
+      GITHUB_TOKEN: ${{ secrets.GH_TOKEN_2 }}
+      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      HEX_API_KEY: ${{ secrets.HEX_API_KEY }}
+      GITHUB_API_URL: ${{ vars.GH_API_URL }}
+      PUBLISH_ARTIFACT: ${{ vars.PUBLISH_ARTIFACT }}
+      DEBUG_MODE: ${{ vars.DEBUG_MODE }}
+      COMMIT_PUSH: ${{ vars.COMMIT_PUSH }}
+      SKIP_GIT_HOOKS: 'true'
+      SKIP_RELEASE: ${{ contains(github.event.head_commit.message, '[skip release]') || contains(github.event.head_commit.message, '[skip ci]') || contains(github.event.head_commit.message, '[release skip]') || contains(github.event.head_commit.message, '[ci skip]') }}
 
+    steps:
     - name: Install Mix dependencies
       if: ${{ env.SKIP_RELEASE == 'false' && env.PUBLISH_ARTIFACT == 'true' }}
       run: mix deps.get && mix deps.compile
@@ -129,5 +167,3 @@ jobs:
       if: ${{ env.SKIP_RELEASE == 'false' && env.PUBLISH_ARTIFACT == 'true' }}
       run: mix hex.publish --replace --yes
       working-directory: Elixir/Konex
-      env:
-        HEX_API_KEY: ${{ secrets.HEX_API_KEY }}
