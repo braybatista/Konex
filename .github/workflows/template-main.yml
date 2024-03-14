@@ -11,7 +11,7 @@ permissions:
   id-token: write
 
 jobs:
-  Set Up:
+  Set_Up:
     environment: ACTIONS_ENV
     runs-on: ubuntu-latest
 
@@ -46,7 +46,7 @@ jobs:
       if: ${{ env.SKIP_RELEASE == 'false' }}
       run: npm install -g semantic-release @semantic-release/changelog @semantic-release/github conventional-changelog-eslint conventional-changelog-conventionalcommits conventional-changelog-angular -D
 
-  Generate Release:
+  Generate_Release:
     environment: ACTIONS_ENV
     runs-on: ubuntu-latest
 
@@ -78,7 +78,7 @@ jobs:
         echo "$VER"
         echo "RELEASE_VERSION=$(git tag | sort --version-sort | tail -n1 | tr -d 'v')" >> $GITHUB_ENV
 
-  Commit and Push:
+  Commit_and_Push:
     environment: ACTIONS_ENV
     runs-on: ubuntu-latest
 
@@ -108,7 +108,7 @@ jobs:
   Publish:
     environment: ACTIONS_ENV
     runs-on: ubuntu-latest
-    
+
     steps:
     - uses: actions/checkout@v4
 
