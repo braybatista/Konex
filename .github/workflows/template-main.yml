@@ -43,10 +43,10 @@ jobs:
         otp-version: '25'
     
     - name: setup semantic-release
-      run: npm install -g semantic-release @semantic-release/changelog @semantic-release/github -D
+      run: npm install -g semantic-release @semantic-release/changelog @semantic-release/github conventional-changelog-eslint conventional-changelog-conventionalcommits conventional-changelog-angular -D
     
     - name: release
-      run: npx -p @semantic-release/changelog semantic-release
+      run: npx -p conventional-changelog-eslint -p conventional-changelog-conventionalcommits -p @semantic-release/changelog semantic-release
       
     - name: Validate variables
       if: ${{ env.DEBUG_MODE == 'true' }}
