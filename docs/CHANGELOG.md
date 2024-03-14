@@ -1,3 +1,14 @@
+## [2.0.4](https://github.com/braybatista/Konex/compare/v2.0.3...v2.0.4) (2024-03-14)
+
+
+### Bug Fixes
+
+* running with multiple jobs ([e4923c0](https://github.com/braybatista/Konex/commit/e4923c03bdc14fb49e69c9f5a8fe19ac6880fa5f))
+* running with multiple jobs 2 ([340939d](https://github.com/braybatista/Konex/commit/340939d9a02efba159558b07fde8006c97697e6f))
+* running with multiple jobs 3 ([3537870](https://github.com/braybatista/Konex/commit/35378702c9e270f2d2626d318024265f0efa2145))
+* running with multiple jobs 5 ([5aa6b73](https://github.com/braybatista/Konex/commit/5aa6b73a86e412c759284931ae951ee6f5bec9c9))
+* running with multiple jobs 6 ([72674f5](https://github.com/braybatista/Konex/commit/72674f55d8d377e59024956ef737e1174a9654f7))
+
 ## [2.0.3](https://github.com/braybatista/Konex/compare/v2.0.2...v2.0.3) (2024-03-14)
 
 
