@@ -28,6 +28,9 @@ jobs:
       DEBUG_MODE: ${{ vars.DEBUG_MODE }}
       COMMIT_PUSH: ${{ vars.COMMIT_PUSH }}
 
+    steps:
+    - uses: actions/checkout@v4
+
     - name: Validate variables
       if: ${{ env.DEBUG_MODE == 'true' }}
       run: |
@@ -39,9 +42,6 @@ jobs:
         echo "message1: ${{ github.event.head_commit.message }}"
         echo "message2: ${{ github.event.workflow_run.head_commit.message }}"
         echo "message3: ${{ github.event.commits[0].message }}"
-
-    # steps:
-    # - uses: actions/checkout@v4
 
     # - name: Setup Node.js
     #   uses: actions/setup-node@v4
