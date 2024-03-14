@@ -33,7 +33,7 @@ jobs:
       if: ${{ env.DEBUG_MODE == 'true' }}
       run: |
         echo "COMMIT_LAST_MESSAGE: ${{ github.event.head_commit.message }}"
-        echo "${{ contains(github.event.head_commit.message, [ ['skip ci'], ['ci skip'], ['skip actions'], ['skip release'], ['actions skip'] ]) }}""
+        echo "${{ contains(fromJson('[[\"skip ci\"], [\"ci skip\"], [\"skip actions\"], [\"skip release\"], [\"actions skip\"]]'), github.event.head_commit.message) }}"
         echo "SKIP_RELEASE: ${{ env.SKIP_RELEASE }}"
 
     # - name: Setup Node.js
