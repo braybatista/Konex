@@ -35,7 +35,7 @@ jobs:
       run: |
         echo "COMMIT_LAST_MESSAGE: ${{ github.event.head_commit.message }}"
         echo "SKIP_ARRAY_STRING: ${{ fromJson(env.SKIP_ARRAY_STRING) }}"
-        echo "SKIP_ARRAY_STRING2: ${{ fromJson('[[`skip ci`], [`ci skip`], [`skip actions`], [`skip release`], [`actions skip`]]') }}"
+        echo "${{ fromJson('[["skip ci"], ["ci skip"], ["skip actions"], ["skip release"], ["actions skip"]]') }}"
         echo "${{ contains(fromJson(env.SKIP_ARRAY_STRING), github.event.head_commit.message) }}"
         echo "${{ contains(github.event.head_commit.message, fromJson(env.SKIP_ARRAY_STRING)) }}"
         echo "SKIP_RELEASE: ${{ env.SKIP_RELEASE }}"
