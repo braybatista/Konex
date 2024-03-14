@@ -36,6 +36,8 @@ jobs:
       run: |
         echo "message1: ${{ github.event.head_commit.message }}"
         echo "message2: ${{ github.event.commits[0].message }}"
+        echo "validation1: ${{ contains(github.event.head_commit.message, '[skip release]') }}"
+        echo "validation2: ${{ contains('[skip release]', github.event.head_commit.message) }}"
         echo "COMMIT_LAST_MESSAGE=${{ github.event.commits[0].message }}" >> $GITHUB_ENV
 
     - name: Validate variables
