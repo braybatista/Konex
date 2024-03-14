@@ -64,8 +64,8 @@ jobs:
     - name: Validate docs
       if: ${{ env.DEBUG_MODE == 'true' }}
       run: |
-        echo ls -l
-        echo ls -l docs
+        ls -l
+        ls -l docs
 
 
     - name: Set variables From git tag command
