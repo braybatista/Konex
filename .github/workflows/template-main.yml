@@ -77,7 +77,7 @@ jobs:
       working-directory: Elixir/Konex
     
     - name: Run Mix tests
-      if: ${{ env.SKIP_RELEASE == 'false' &&  env.PUBLISH_ARTIFACT == 'true' }}
+      if: ${{ env.SKIP_RELEASE == 'false' && env.PUBLISH_ARTIFACT == 'true' }}
       run: mix test
       working-directory: Elixir/Konex
 
