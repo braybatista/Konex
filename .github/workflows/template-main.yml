@@ -90,24 +90,24 @@ jobs:
       run: sed -i 's/@version \".*\"/@version "${{ env.RELEASE_VERSION  }}"/g' mix.exs
       working-directory: Elixir/Konex
 
-    # # testing, working but we need to prevent next run.
-    # # adding [skip ci] to commit comment we can skip the new CI run onf the workflow
-    # # not working on multiple commits from pull request
-    # - name: Commit And Push version
-    #   if: ${{ env.SKIP_RELEASE == 'false' && env.COMMIT_PUSH == 'true' }}
-    #   uses: github-actions-x/commit@v2.9
-    #   with:
-    #     github-token: ${{ env.GITHUB_TOKEN }}
-    #     push-branch: main
-    #     commit-message: '[skip release] [skip ci] Upgrade version to ${{ env.RELEASE_VERSION }}'
-    #     force-add: "true"
-    #     files: Elixir/Konex/mix.exs docs/CHANGELOG.md
-    #     name: Release Bot
-    #     email: bbatist@bancolombia.com.co
+    # testing, working but we need to prevent next run.
+    # adding [skip ci] to commit comment we can skip the new CI run onf the workflow
+    # not working on multiple commits from pull request
+    - name: Commit And Push version
+      if: ${{ env.SKIP_RELEASE == 'false' && env.COMMIT_PUSH == 'true' }}
+      uses: github-actions-x/commit@v2.9
+      with:
+        github-token: ${{ env.GITHUB_TOKEN }}
+        push-branch: main
+        commit-message: '[skip release] [skip ci] Upgrade version to ${{ env.RELEASE_VERSION }}'
+        force-add: "true"
+        files: Elixir/Konex/mix.exs docs/CHANGELOG.md
+        name: Release Bot
+        email: bbatist@bancolombia.com.co
 
-    # - name: Publish to HEX
-    #   if: ${{ env.SKIP_RELEASE == 'false' && env.PUBLISH_ARTIFACT == 'true' }}
-    #   run: mix hex.publish --replace --yes
-    #   working-directory: Elixir/Konex
-    #   env:
-    #     HEX_API_KEY: ${{ secrets.HEX_API_KEY }}
+    - name: Publish to HEX
+      if: ${{ env.SKIP_RELEASE == 'false' && env.PUBLISH_ARTIFACT == 'true' }}
+      run: mix hex.publish --replace --yes
+      working-directory: Elixir/Konex
+      env:
+        HEX_API_KEY: ${{ secrets.HEX_API_KEY }}
