@@ -23,6 +23,8 @@ jobs:
       PUBLISH_ARTIFACT: ${{ vars.PUBLISH_ARTIFACT }}
       DEBUG_MODE: ${{ vars.DEBUG_MODE }}
       COMMIT_PUSH: ${{ vars.COMMIT_PUSH }}
+      ELIXIR_VERSION: ${{ vars.ELIXIR_VERSION }}
+      OTP_VERSION: ${{ vars.OTP_VERSION }}
       SKIP_GIT_HOOKS: 'true'
       SKIP_RELEASE: ${{ contains(github.event.head_commit.message, '[skip release]') || contains(github.event.head_commit.message, '[skip ci]') || contains(github.event.head_commit.message, '[release skip]') || contains(github.event.head_commit.message, '[ci skip]') }}
 
@@ -39,8 +41,8 @@ jobs:
       if: ${{ env.SKIP_RELEASE == 'false' }}
       uses: erlef/setup-beam@v1
       with:
-        elixir-version: '1.14.3'
-        otp-version: '25'
+        elixir-version: ${{ env.ELIXIR_VERSION }}
+        otp-version: ${{ env.OTP_VERSION }}
     
     - name: Setup semantic-release
       if: ${{ env.SKIP_RELEASE == 'false' }}
@@ -71,22 +73,6 @@ jobs:
         echo "COMMIT_LAST_MESSAGE: ${{ github.event.head_commit.message }}"
         echo "SKIP_RELEASE: ${{ env.SKIP_RELEASE }}"
 
-    # PUBLISH_ARTIFACT steps
-    - name: Install Mix dependencies
-      if: ${{ env.SKIP_RELEASE == 'false' && env.PUBLISH_ARTIFACT == 'true' }}
-      run: mix deps.get && mix deps.compile
-      working-directory: Elixir/Konex
-    
-    - name: Run Mix tests
-      if: ${{ env.SKIP_RELEASE == 'false' && env.PUBLISH_ARTIFACT == 'true' }}
-      run: mix test
-      working-directory: Elixir/Konex
-
-    - name: Publish to HEX
-      if: ${{ env.SKIP_RELEASE == 'false' && env.PUBLISH_ARTIFACT == 'true' }}
-      run: mix hex.publish --replace --yes
-      working-directory: Elixir/Konex
-    
     # COMMIT_PUSH steps
     - name: Upgrade mix.exs
       if: ${{ env.SKIP_RELEASE == 'false' && env.COMMIT_PUSH == 'true' }}
@@ -104,3 +90,19 @@ jobs:
         files: Elixir/Konex/mix.exs docs/CHANGELOG.md
         name: Release Bot
         email: bbatist@bancolombia.com.co
+
+    # PUBLISH_ARTIFACT steps
+    - name: Install Mix dependencies
+      if: ${{ env.SKIP_RELEASE == 'false' && env.PUBLISH_ARTIFACT == 'true' }}
+      run: mix deps.get && mix deps.compile
+      working-directory: Elixir/Konex
+    
+    - name: Run Mix tests
+      if: ${{ env.SKIP_RELEASE == 'false' && env.PUBLISH_ARTIFACT == 'true' }}
+      run: mix test
+      working-directory: Elixir/Konex
+
+    - name: Publish to HEX
+      if: ${{ env.SKIP_RELEASE == 'false' && env.PUBLISH_ARTIFACT == 'true' }}
+      run: mix hex.publish --replace --yes
+      working-directory: Elixir/Konex
