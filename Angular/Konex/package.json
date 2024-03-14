@@ -18,6 +18,8 @@
     "@angular/platform-browser": "^14.2.0",
     "@angular/platform-browser-dynamic": "^14.2.0",
     "@angular/router": "^14.2.0",
+    "conventional-changelog-angular": "^7.0.0",
+    "conventional-changelog-conventionalcommits": "^7.0.2",
     "http": "^0.0.1-security",
     "jquery": "^3.6.1",
     "materialize-css": "^1.0.0",
