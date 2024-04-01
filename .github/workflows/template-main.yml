@@ -32,14 +32,15 @@ jobs:
     - uses: actions/checkout@v4
 
     - name: Create A File
-      run: echo '{"repositoryUrl":"https://github.com/bancolombia/opensource-innersource-toolkit.git","branches":["feature/semantic_release"],"plugins":[["@semantic-release/commit-analyzer",{"preset":"eslint","releaseRules":[{"tag":"breaking","release":"major"},{"tag":"feat","release":"minor"},{"tag":"chore","release":"minor"},{"tag":"refactor","release":"minor"},{"tag":"update","release":"minor"},{"tag":"upgrade","release":"minor"},{"tag":"docs","release":"patch"},{"tag":"ci","release":"patch"},{"tag":"fix","release":"patch"},{"tag":"test","release":"patch"},{"tag":"perf","release":"patch"},{"scope":"no-release","release":false}]}],["@semantic-release/release-notes-generator",{"preset":"conventionalcommits","presetConfig":{"types":[{"type":"breaking","section":"Major version release","hidden":false},{"type":"BREAKING","section":"Major version release","hidden":false},{"type":"BREAKING CHANGE","section":"Major version release","hidden":false},{"type":"BREAKING CHANGES","section":"Major version release","hidden":false},{"type":"feat","section":"Features","hidden":false},{"type":"fix","section":"Bug Fixes","hidden":false},{"type":"update","section":"Updates","hidden":false},{"type":"upgrade","section":"Upgrades","hidden":false},{"type":"docs","section":"Documentation","hidden":false},{"type":"chore","section":"Chores","hidden":false},{"type":"ci","section":"CI/CD Changes","hidden":false},{"type":"test","section":"Tests","hidden":false},{"type":"refactor","section":"Refactoring","hidden":false},{"type":"perf","section":"Performance Improvements","hidden":false}]},"writerOpts":{"commitsSort":["subject","scope"]}}],"@semantic-release/github",["@semantic-release/changelog",{"changelogFile":"docs/CHANGELOG.md"}]]}' > .releaserc2
-    - name: Validate File
-      run: ls
+      run: echo '{"repositoryUrl":"https://github.com/bancolombia/opensource-innersource-toolkit.git","branches":["main"],"plugins":[["@semantic-release/commit-analyzer",{"preset":"eslint","releaseRules":[{"tag":"breaking","release":"major"},{"tag":"feat","release":"minor"},{"tag":"chore","release":"minor"},{"tag":"refactor","release":"minor"},{"tag":"update","release":"minor"},{"tag":"upgrade","release":"minor"},{"tag":"docs","release":"patch"},{"tag":"ci","release":"patch"},{"tag":"fix","release":"patch"},{"tag":"test","release":"patch"},{"tag":"perf","release":"patch"},{"scope":"no-release","release":false}]}],["@semantic-release/release-notes-generator",{"preset":"conventionalcommits","presetConfig":{"types":[{"type":"breaking","section":"Major version release","hidden":false},{"type":"BREAKING","section":"Major version release","hidden":false},{"type":"BREAKING CHANGE","section":"Major version release","hidden":false},{"type":"BREAKING CHANGES","section":"Major version release","hidden":false},{"type":"feat","section":"Features","hidden":false},{"type":"fix","section":"Bug Fixes","hidden":false},{"type":"update","section":"Updates","hidden":false},{"type":"upgrade","section":"Upgrades","hidden":false},{"type":"docs","section":"Documentation","hidden":false},{"type":"chore","section":"Chores","hidden":false},{"type":"ci","section":"CI/CD Changes","hidden":false},{"type":"test","section":"Tests","hidden":false},{"type":"refactor","section":"Refactoring","hidden":false},{"type":"perf","section":"Performance Improvements","hidden":false}]},"writerOpts":{"commitsSort":["subject","scope"]}}],"@semantic-release/github",["@semantic-release/changelog",{"changelogFile":"docs/CHANGELOG.md"}]]}' > .releaserc2
+    
     - name: Show File
       id: vars
       run: |
+        echo "GITHUB_BRANCH=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
         echo "output_test=$(cat .releaserc2)" >> $GITHUB_OUTPUT
         echo ::set-output name=short_ref::${GITHUB_REF#refs/*/}
+    
     - name: Test output
       run: |
         echo ${{ steps.vars.outputs.output_test }}
@@ -72,20 +73,21 @@ jobs:
     #     echo "$VER"
     #     echo "RELEASE_VERSION=$(git tag | sort --version-sort | tail -n1 | tr -d 'v')" >> $GITHUB_ENV
 
-    # - name: Validate variables
-    #   if: ${{ env.SKIP_RELEASE == 'false' && env.DEBUG_MODE == 'true' }}
-    #   run: |
-    #     echo "RELEASE_VERSION=${{ env.RELEASE_VERSION }}"
-    #     echo "CONDITION RELEASE_VERSION != '';=${{ env.RELEASE_VERSION != '' }}"
-    #     echo "CONDITION PUBLISH_ARTIFACT == '';=${{ env.RELEASE_VERSION == '' }}"
-    #     echo "CONDITION PUBLISH_ARTIFACT == TRUE;=${{ env.PUBLISH_ARTIFACT == 'true' }}"
-    #     echo "CONDITION PUBLISH_ARTIFACT == FALSE;=${{ env.PUBLISH_ARTIFACT == 'false' }}"
-    #     echo "GITHUB_API_URL=${{ env.GITHUB_API_URL }}"
-    #     echo "PUBLISH_ARTIFACT=${{ env.PUBLISH_ARTIFACT }}"
-    #     echo "COMMIT_PUSH=${{ env.COMMIT_PUSH }}"
-    #     echo "DEBUG_MODE=${{ env.DEBUG_MODE }}"
-    #     echo "COMMIT_LAST_MESSAGE: ${{ github.event.head_commit.message }}"
-    #     echo "SKIP_RELEASE: ${{ env.SKIP_RELEASE }}"
+    - name: Validate variables
+      if: ${{ env.SKIP_RELEASE == 'false' && env.DEBUG_MODE == 'true' }}
+      run: |
+        echo "RELEASE_VERSION=${{ env.RELEASE_VERSION }}"
+        echo "CONDITION RELEASE_VERSION != '';=${{ env.RELEASE_VERSION != '' }}"
+        echo "CONDITION PUBLISH_ARTIFACT == '';=${{ env.RELEASE_VERSION == '' }}"
+        echo "CONDITION PUBLISH_ARTIFACT == TRUE;=${{ env.PUBLISH_ARTIFACT == 'true' }}"
+        echo "CONDITION PUBLISH_ARTIFACT == FALSE;=${{ env.PUBLISH_ARTIFACT == 'false' }}"
+        echo "GITHUB_API_URL=${{ env.GITHUB_API_URL }}"
+        echo "PUBLISH_ARTIFACT=${{ env.PUBLISH_ARTIFACT }}"
+        echo "COMMIT_PUSH=${{ env.COMMIT_PUSH }}"
+        echo "DEBUG_MODE=${{ env.DEBUG_MODE }}"
+        echo "COMMIT_LAST_MESSAGE: ${{ github.event.head_commit.message }}"
+        echo "SKIP_RELEASE: ${{ env.SKIP_RELEASE }}"
+        echo "GITHUB_BRANCH: ${{ env.GITHUB_BRANCH }}"
 
     # # COMMIT_PUSH steps
     # - name: Upgrade mix.exs
@@ -98,7 +100,7 @@ jobs:
     #   uses: github-actions-x/commit@v2.9
     #   with:
     #     github-token: ${{ env.GITHUB_TOKEN }}
-    #     push-branch: main
+    #     push-branch: ${{ env.GITHUB_BRANCH }}
     #     commit-message: '[skip release] [skip ci] Upgrade version to ${{ env.RELEASE_VERSION }}'
     #     force-add: "true"
     #     files: Elixir/Konex/mix.exs docs/CHANGELOG.md
