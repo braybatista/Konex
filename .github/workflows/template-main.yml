@@ -37,12 +37,13 @@ jobs:
       run: ls
     - name: Show File
       id: vars
-      run: echo "output_test=$(cat .releaserc2)" >> $GITHUB_OUTPUT
+      run: |
+        echo "output_test=$(cat .releaserc2)" >> $GITHUB_OUTPUT
+        echo ::set-output name=short_ref::${GITHUB_REF#refs/*/}
     - name: Test output
-      run: echo ${{ steps.vars.outputs.output_test }}
-    - name: Get Current Branch
-      id: current_branch
-      run: echo "Current branch is ${{ env.GITHUB_REF }}"
+      run: |
+        echo ${{ steps.vars.outputs.output_test }}
+        echo ${{ steps.vars.outputs.short_ref }}
 
     # - name: Setup Node.js
     #   if: ${{ env.SKIP_RELEASE == 'false' }}
