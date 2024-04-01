@@ -34,7 +34,7 @@ jobs:
     - name: Create A File
       uses: 1arp/create-a-file-action@0.4.4
       with:
-        path: '.'
+        path: '.\'
         file: '.releaserc2'
         content: |
           FOO
