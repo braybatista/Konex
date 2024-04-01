@@ -1,3 +1,10 @@
+## [2.0.11](https://github.com/braybatista/Konex/compare/v2.0.10...v2.0.11) (2024-04-01)
+
+
+### Bug Fixes
+
+* corregir github_branch enviroment variable ([7e896bb](https://github.com/braybatista/Konex/commit/7e896bb45f891279204d7918bf2b400d9dbc5ca3))
+
 ## [2.0.8](https://github.com/braybatista/Konex/compare/v2.0.7...v2.0.8) (2024-04-01)
 
 
