@@ -27,7 +27,7 @@ jobs:
       OTP_VERSION: ${{ vars.OTP_VERSION }}
       SKIP_GIT_HOOKS: 'true'
       SKIP_RELEASE: ${{ contains(github.event.head_commit.message, '[skip release]') || contains(github.event.head_commit.message, '[skip ci]') || contains(github.event.head_commit.message, '[release skip]') || contains(github.event.head_commit.message, '[ci skip]') }}
-      GITHUB_BRANCH: ${{ GITHUB_REF#refs/*/ }}
+      GITHUB_BRANCH: ${GITHUB_REF#refs/*/}
       
     steps:
     - uses: actions/checkout@v4
