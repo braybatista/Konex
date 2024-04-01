@@ -47,32 +47,32 @@ jobs:
         echo "${{ github.server_url }}/${{ github.repository }}"
         #deprecated echo ::set-output name=actual_branch::${GITHUB_REF#refs/*/}
 
-    # - name: Setup Node.js
-    #   if: ${{ env.SKIP_RELEASE == 'false' }}
-    #   uses: actions/setup-node@v4
-    #   with:
-    #     node-version: 20.x
+    - name: Setup Node.js
+      if: ${{ env.SKIP_RELEASE == 'false' }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: 20.x
     
-    # - name: Set up Elixir 1.14.3 and Otp 25
-    #   if: ${{ env.SKIP_RELEASE == 'false' }}
-    #   uses: erlef/setup-beam@v1
-    #   with:
-    #     elixir-version: ${{ env.ELIXIR_VERSION }}
-    #     otp-version: ${{ env.OTP_VERSION }}
+    - name: Set up Elixir 1.14.3 and Otp 25
+      if: ${{ env.SKIP_RELEASE == 'false' }}
+      uses: erlef/setup-beam@v1
+      with:
+        elixir-version: ${{ env.ELIXIR_VERSION }}
+        otp-version: ${{ env.OTP_VERSION }}
     
-    # - name: Setup semantic-release
-    #   if: ${{ env.SKIP_RELEASE == 'false' }}
-    #   run: npm install -g semantic-release @semantic-release/changelog @semantic-release/github conventional-changelog-eslint conventional-changelog-conventionalcommits conventional-changelog-angular -D
+    - name: Setup semantic-release
+      if: ${{ env.SKIP_RELEASE == 'false' }}
+      run: npm install -g semantic-release @semantic-release/changelog @semantic-release/github conventional-changelog-eslint conventional-changelog-conventionalcommits conventional-changelog-angular -D
     
-    # - name: Release
-    #   if: ${{ env.SKIP_RELEASE == 'false' }}
-    #   run: npx -p conventional-changelog-eslint -p conventional-changelog-conventionalcommits -p @semantic-release/changelog semantic-release
+    - name: Release
+      if: ${{ env.SKIP_RELEASE == 'false' }}
+      run: npx -p conventional-changelog-eslint -p conventional-changelog-conventionalcommits -p @semantic-release/changelog semantic-release
 
-    # - name: Set variables From git tag command
-    #   if: ${{ env.SKIP_RELEASE == 'false' }}
-    #   run: |
-    #     echo "$VER"
-    #     echo "RELEASE_VERSION=$(git tag | sort --version-sort | tail -n1 | tr -d 'v')" >> $GITHUB_ENV
+    - name: Set variables From git tag command
+      if: ${{ env.SKIP_RELEASE == 'false' }}
+      run: |
+        echo "$VER"
+        echo "RELEASE_VERSION=$(git tag | sort --version-sort | tail -n1 | tr -d 'v')" >> $GITHUB_ENV
 
     - name: Validate variables
       if: ${{ env.SKIP_RELEASE == 'false' && env.DEBUG_MODE == 'true' }}
@@ -93,36 +93,36 @@ jobs:
         echo ${{ steps.vars.outputs.file_content }}
         echo ${{ steps.vars.outputs.actual_branch }}
 
-    # # COMMIT_PUSH steps
-    # - name: Upgrade mix.exs
-    #   if: ${{ env.SKIP_RELEASE == 'false' && env.COMMIT_PUSH == 'true' }}
-    #   run: sed -i 's/@version \".*\"/@version "${{ env.RELEASE_VERSION  }}"/g' mix.exs
-    #   working-directory: Elixir/Konex
+    # COMMIT_PUSH steps
+    - name: Upgrade mix.exs
+      if: ${{ env.SKIP_RELEASE == 'false' && env.COMMIT_PUSH == 'true' }}
+      run: sed -i 's/@version \".*\"/@version "${{ env.RELEASE_VERSION  }}"/g' mix.exs
+      working-directory: Elixir/Konex
 
-    # - name: Commit And Push version
-    #   if: ${{ env.SKIP_RELEASE == 'false' && env.COMMIT_PUSH == 'true' }}
-    #   uses: github-actions-x/commit@v2.9
-    #   with:
-    #     github-token: ${{ env.GITHUB_TOKEN }}
-    #     push-branch: ${{ env.GITHUB_BRANCH }}
-    #     commit-message: '[skip release] [skip ci] Upgrade version to ${{ env.RELEASE_VERSION }}'
-    #     force-add: "true"
-    #     files: Elixir/Konex/mix.exs docs/CHANGELOG.md
-    #     name: Release Bot
-    #     email: bbatist@bancolombia.com.co
+    - name: Commit And Push version
+      if: ${{ env.SKIP_RELEASE == 'false' && env.COMMIT_PUSH == 'true' }}
+      uses: github-actions-x/commit@v2.9
+      with:
+        github-token: ${{ env.GITHUB_TOKEN }}
+        push-branch: ${{ env.GITHUB_BRANCH }}
+        commit-message: '[skip release] [skip ci] Upgrade version to ${{ env.RELEASE_VERSION }}'
+        force-add: "true"
+        files: Elixir/Konex/mix.exs docs/CHANGELOG.md
+        name: Release Bot
+        email: bbatist@bancolombia.com.co
 
-    # # PUBLISH_ARTIFACT steps
-    # - name: Install Mix dependencies
-    #   if: ${{ env.SKIP_RELEASE == 'false' && env.PUBLISH_ARTIFACT == 'true' }}
-    #   run: mix deps.get && mix deps.compile
-    #   working-directory: Elixir/Konex
+    # PUBLISH_ARTIFACT steps
+    - name: Install Mix dependencies
+      if: ${{ env.SKIP_RELEASE == 'false' && env.PUBLISH_ARTIFACT == 'true' }}
+      run: mix deps.get && mix deps.compile
+      working-directory: Elixir/Konex
     
-    # - name: Run Mix tests
-    #   if: ${{ env.SKIP_RELEASE == 'false' && env.PUBLISH_ARTIFACT == 'true' }}
-    #   run: mix test
-    #   working-directory: Elixir/Konex
+    - name: Run Mix tests
+      if: ${{ env.SKIP_RELEASE == 'false' && env.PUBLISH_ARTIFACT == 'true' }}
+      run: mix test
+      working-directory: Elixir/Konex
 
-    # - name: Publish to HEX
-    #   if: ${{ env.SKIP_RELEASE == 'false' && env.PUBLISH_ARTIFACT == 'true' }}
-    #   run: mix hex.publish --replace --yes
-    #   working-directory: Elixir/Konex
+    - name: Publish to HEX
+      if: ${{ env.SKIP_RELEASE == 'false' && env.PUBLISH_ARTIFACT == 'true' }}
+      run: mix hex.publish --replace --yes
+      working-directory: Elixir/Konex
