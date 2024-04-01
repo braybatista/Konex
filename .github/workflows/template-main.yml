@@ -41,6 +41,8 @@ jobs:
       run: |
         echo "file_content=$(cat .releaserc2)" >> $GITHUB_OUTPUT
         echo "actual_branch=${GITHUB_REF#refs/*/}" >> $GITHUB_OUTPUT
+        git config --get remote.origin.url
+        echo "${{ github.server_url }}/${{ github.repository }}.git"
         #deprecated echo ::set-output name=actual_branch::${GITHUB_REF#refs/*/}
 
     # - name: Setup Node.js
