@@ -9,5 +9,4 @@ public class KonexApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(KonexApplication.class, args);
 	}
-
 }
