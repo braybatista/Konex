@@ -1,3 +1,10 @@
+## [2.0.12](https://github.com/braybatista/Konex/compare/v2.0.11...v2.0.12) (2024-04-11)
+
+
+### Tests
+
+* testing ([f6d9909](https://github.com/braybatista/Konex/commit/f6d9909e92a01bb5008c4ed76cbb95a50489930f))
+
 ## [2.0.11](https://github.com/braybatista/Konex/compare/v2.0.10...v2.0.11) (2024-04-01)
 
 
